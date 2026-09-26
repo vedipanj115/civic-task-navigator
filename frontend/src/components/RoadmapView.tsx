@@ -44,7 +44,7 @@ export function RoadmapView({ journey, onChange }: Props) {
     })
 
   return (
-    <div className="flex flex-1 flex-col md:min-h-0 md:flex-row">
+    <div className="flex flex-1 flex-col md:min-h-0 md:flex-row motion-safe:animate-fade-up">
       <div className="h-[60vh] md:h-auto md:flex-1">
         <RoadmapGraph
           roadmap={roadmap}

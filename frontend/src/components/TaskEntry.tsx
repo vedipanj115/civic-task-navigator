@@ -63,7 +63,7 @@ export function TaskEntry({ onSubmit }: Props) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-xl space-y-6 p-6">
+    <form onSubmit={handleSubmit} className="mx-auto w-full max-w-xl space-y-6 p-6 motion-safe:animate-fade-up">
       <label className="block space-y-1">
         <span className="font-medium">What do you need to get done?</span>
         <input
