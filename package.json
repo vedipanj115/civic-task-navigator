@@ -1,0 +1,13 @@
+{
+  "name": "civic-task-navigator",
+  "private": true,
+  "type": "module",
+  "workspaces": ["shared", "api", "web"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "typecheck": "tsc -p shared --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "^5"
+  }
+}
