@@ -9,7 +9,7 @@
 | Graph | React Flow | Handles nodes, edges, panning and zoom; do not hand-roll SVG |
 | Data fetching | TanStack Query | Caching, loading and error states for free |
 | Routing | React Router | Four routes, nothing exotic |
-| Backend | Node 22 + Express + TypeScript | Simple, fast to write, easy to reason about |
+| Backend | Node 22+ (team standard: 24) + Express + TypeScript | Simple, fast to write, easy to reason about |
 | Data store | JSON files loaded into memory at boot | Dataset is ~6 steps; a database adds setup risk and buys nothing |
 | Shared types | `shared/` workspace, imported by both sides | One definition, no drift |
 | Tests | `node --test` + `tsx` | Built in, no extra framework |

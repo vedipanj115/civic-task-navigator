@@ -5,7 +5,7 @@
 - `main` is **protected**: pull request + 1 approval, squash merge.
 - Branch names: `feat/m1-roadmap-graph`, `fix/m2-cycle-detection`, `data/m3-fssai-step`, `chore/m4-ci`.
 - One branch, one concern. A branch that lives longer than a phase is too big.
-- Nobody pushes directly to `main`. M4 may, only to unblock a red `main`, and says so in the group.
+- Nobody pushes directly to `main`, including M4. A fix for a red `main` goes through a PR like everything else.
 
 ## 2. Merge protocol
 

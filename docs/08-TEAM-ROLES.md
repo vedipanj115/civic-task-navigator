@@ -4,7 +4,7 @@
 
 | Slot | Person | GitHub | Role |
 |---|---|---|---|
-| M1 | _claim in issue #1_ | | Frontend / Product |
+| M1 | Vivaan | @vivaannk07 | Frontend / Product |
 | M2 | _claim in issue #1_ | | Backend / Engine |
 | M3 | _claim in issue #1_ | | Data / Curation |
 | M4 | Vedika | @vedipanj115 | Integration / QA / Specs |
