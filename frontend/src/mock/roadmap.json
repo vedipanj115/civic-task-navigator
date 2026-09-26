@@ -1,0 +1,134 @@
+{
+  "procedureId": "start-food-business-mumbai",
+  "stages": [
+    {
+      "stage": 1,
+      "steps": [
+        {
+          "id": "pan",
+          "title": "Get a PAN card",
+          "documents": ["Aadhaar card", "Passport-size photo"],
+          "office": "Protean (NSDL) — online",
+          "fee": "₹107",
+          "processingTime": "Up to 15 days",
+          "applyLink": "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html",
+          "sourceUrl": "https://www.incometax.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": [],
+          "dependencyReason": {}
+        },
+        {
+          "id": "rent",
+          "title": "Register rent agreement",
+          "documents": ["Owner's property papers", "Aadhaar of owner and tenant", "Draft agreement"],
+          "office": "Sub-Registrar / IGR Maharashtra e-registration",
+          "fee": "~₹2,000",
+          "processingTime": "1–2 days",
+          "applyLink": "https://igrmaharashtra.gov.in",
+          "sourceUrl": "https://igrmaharashtra.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": [],
+          "dependencyReason": {}
+        }
+      ]
+    },
+    {
+      "stage": 2,
+      "steps": [
+        {
+          "id": "udyam",
+          "title": "Udyam (MSME) registration",
+          "documents": ["Aadhaar card", "PAN card"],
+          "office": "Ministry of MSME — online",
+          "fee": "Free",
+          "processingTime": "Same day",
+          "applyLink": "https://udyamregistration.gov.in",
+          "sourceUrl": "https://udyamregistration.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": ["pan"],
+          "dependencyReason": { "pan": "Form needs owner's PAN" }
+        },
+        {
+          "id": "shop",
+          "title": "Shop & Establishment intimation",
+          "documents": ["PAN card", "Registered rent agreement", "Photo of shop with name board"],
+          "office": "Labour Department, Maharashtra — Aaple Sarkar",
+          "fee": "Free (under 10 workers)",
+          "processingTime": "Up to 7 days",
+          "applyLink": "https://aaplesarkar.mahaonline.gov.in",
+          "sourceUrl": "https://aaplesarkar.mahaonline.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": ["pan", "rent"],
+          "dependencyReason": {
+            "pan": "Owner identity",
+            "rent": "Proof of premises"
+          }
+        },
+        {
+          "id": "fssai",
+          "title": "FSSAI basic registration",
+          "documents": ["Photo ID", "Registered rent agreement", "List of food items"],
+          "office": "FSSAI — FoSCoS portal",
+          "fee": "₹100 / year",
+          "processingTime": "Up to 7 days",
+          "applyLink": "https://foscos.fssai.gov.in",
+          "sourceUrl": "https://foscos.fssai.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": ["rent"],
+          "dependencyReason": { "rent": "Kitchen address proof" }
+        }
+      ]
+    },
+    {
+      "stage": 3,
+      "steps": [
+        {
+          "id": "bank",
+          "title": "Open a current account",
+          "documents": ["PAN card", "Shop & Establishment certificate", "Udyam certificate"],
+          "office": "Any bank branch",
+          "fee": "Free",
+          "processingTime": "2–3 days",
+          "applyLink": "https://www.rbi.org.in",
+          "sourceUrl": "https://www.rbi.org.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": ["shop", "udyam"],
+          "dependencyReason": {
+            "shop": "Bank's business proof",
+            "udyam": "Business KYC"
+          }
+        },
+        {
+          "id": "health",
+          "title": "BMC health trade licence",
+          "documents": ["FSSAI registration", "Shop & Establishment certificate", "Premises layout plan"],
+          "office": "BMC ward office — Health Department",
+          "fee": "~₹2,000",
+          "processingTime": "15–30 days",
+          "applyLink": "https://portal.mcgm.gov.in",
+          "sourceUrl": "https://portal.mcgm.gov.in",
+          "verifiedOn": "2026-09-20",
+          "dependsOn": ["fssai", "shop"],
+          "dependencyReason": {
+            "fssai": "Food safety first",
+            "shop": "Establishment proof"
+          }
+        }
+      ]
+    }
+  ],
+  "excludedSteps": [
+    {
+      "stepId": "gst",
+      "title": "GST registration",
+      "reason": "Turnover under ₹20 lakh — not mandatory."
+    },
+    {
+      "stepId": "fire-noc",
+      "title": "Fire NOC",
+      "reason": "Small premises with no LPG bank — not required."
+    }
+  ],
+  "criticalPathDays": 39,
+  "totalCost": 4207
+}
