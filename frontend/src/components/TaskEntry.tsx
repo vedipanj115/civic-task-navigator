@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, type FormEvent } from 'react'
 import { fetchMeta, resolveTask } from '../api'
-import type { Activity, City, EntityType, JourneyAnswers, PremisesType } from '../types'
+import type { Activity, City, EntityType, JourneyAnswers, PremisesType, ResolveResponse } from '../types'
 
 const INPUT = 'w-full rounded-md border border-slate-300 bg-white px-3 py-2'
 
@@ -24,13 +24,36 @@ function Choice({ name, legend, options }: { name: string; legend: string; optio
   )
 }
 
+type ProcedureButtonsProps = { candidates: ResolveResponse['candidates']; onPick: (procedureId: string) => void }
+
+function ProcedureButtons({ candidates, onPick }: ProcedureButtonsProps) {
+  return (
+    <div className="mt-3 flex flex-col gap-2">
+      {candidates.map((c) => (
+        <button
+          key={c.procedureId}
+          type="button"
+          onClick={() => onPick(c.procedureId)}
+          className="rounded-md border border-slate-300 px-3 py-2 text-left text-sm font-medium hover:border-indigo-500 hover:bg-indigo-50"
+        >
+          {c.name}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 type Props = { onSubmit: (procedureId: string, answers: JourneyAnswers) => void }
+
+// Unresolved task (docs/06-UI-SPEC.md S1): keep the answers so picking a candidate can submit straight away.
+type Picker = { candidates: ResolveResponse['candidates']; answers: JourneyAnswers; showAll: boolean }
 
 export function TaskEntry({ onSubmit }: Props) {
   const { data: meta, error: metaError } = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: Infinity })
   const [task, setTask] = useState('')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [picker, setPicker] = useState<Picker | null>(null)
 
   if (metaError) return <p className="m-auto text-red-600">Couldn't load the form: {metaError.message}</p>
   if (!meta) return <p className="m-auto text-slate-500">Loading…</p>
@@ -51,10 +74,11 @@ export function TaskEntry({ onSubmit }: Props) {
     }
     setPending(true)
     setError(null)
+    setPicker(null)
     try {
       const res = await resolveTask(task.trim(), answers.city)
       if (res.resolved && res.procedureId) onSubmit(res.procedureId, answers)
-      else setError("We couldn't match that task yet. Try describing it differently.")
+      else setPicker({ candidates: res.candidates, answers, showAll: false })
     } catch {
       setError('Something went wrong. Please try again.')
     } finally {
@@ -69,7 +93,10 @@ export function TaskEntry({ onSubmit }: Props) {
         <input
           required
           value={task}
-          onChange={(e) => setTask(e.target.value)}
+          onChange={(e) => {
+            setTask(e.target.value)
+            setPicker(null) // a new query needs a new resolve
+          }}
           placeholder="e.g. Open a small restaurant"
           className={INPUT}
         />
@@ -115,6 +142,28 @@ export function TaskEntry({ onSubmit }: Props) {
             </label>
           </div>
         </>
+      )}
+
+      {picker && (
+        <div role="status" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+          <p className="font-medium">We couldn't match “{task.trim()}” exactly. Did you mean…</p>
+          <ProcedureButtons candidates={picker.candidates} onPick={(id) => onSubmit(id, picker.answers)} />
+          {picker.showAll ? (
+            <div className="mt-4 border-t border-slate-100 pt-3">
+              <p className="text-sm font-medium text-slate-500">All procedures</p>
+              {/* ponytail: the only procedure is already the candidate; list GET /v1/procedures once there are more. */}
+              <ProcedureButtons candidates={picker.candidates} onPick={(id) => onSubmit(id, picker.answers)} />
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setPicker({ ...picker, showAll: true })}
+              className="mt-3 text-sm text-indigo-600 underline hover:text-indigo-800"
+            >
+              Show all procedures
+            </button>
+          )}
+        </div>
       )}
 
       {error && <p className="text-sm text-red-600">{error}</p>}

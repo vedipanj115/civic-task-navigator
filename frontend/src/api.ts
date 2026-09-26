@@ -22,10 +22,17 @@ export async function fetchMeta(): Promise<CitiesMetaResponse> {
   return metaFixture as CitiesMetaResponse
 }
 
-// POST /v1/resolve — the mock matches every query to the one procedure we have.
-export async function resolveTask(_query: string, _city: City): Promise<ResolveResponse> {
+// POST /v1/resolve — the mock resolves any query mentioning a food-outlet keyword; anything else is
+// unrecognised (still a 200) and returns every procedure (just ours) as a candidate for the picker.
+// ponytail: substring keyword match; the real resolver scores token overlap (docs/03-DEPENDENCY-SPEC.md §9).
+const FOOD_OUTLET_KEYWORDS = ['restaurant', 'food', 'shop', 'cafe', 'eatery', 'outlet', 'stall']
+
+export async function resolveTask(query: string, _city: City): Promise<ResolveResponse> {
   const { procedureId, name } = baseRoadmap.procedure
-  return { resolved: true, procedureId, confidence: 1, candidates: [{ procedureId, name, score: 1 }] }
+  const q = query.toLowerCase()
+  if (FOOD_OUTLET_KEYWORDS.some((k) => q.includes(k)))
+    return { resolved: true, procedureId, confidence: 1, candidates: [{ procedureId, name, score: 1 }] }
+  return { resolved: false, procedureId: null, confidence: 0, candidates: [{ procedureId, name, score: 0 }] }
 }
 
 // POST /v1/roadmap — the mock ignores procedureId/answers; only completedStepIds changes the result.

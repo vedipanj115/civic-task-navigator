@@ -3,8 +3,41 @@ import { useState } from 'react'
 import { fetchMeta, fetchRoadmap, fetchStep } from '../api'
 import { remaining } from '../progress'
 import type { Journey } from '../types'
+import { ErrorState } from './ErrorState'
 import { RoadmapGraph } from './RoadmapGraph'
 import { SidePanel } from './SidePanel'
+
+// Loading state per docs/06-UI-SPEC.md: 3 stage columns of ghost cards plus the rail, same layout as loaded.
+function RoadmapSkeleton() {
+  const ghost = 'rounded-lg bg-slate-200/70'
+  return (
+    <div aria-busy="true" aria-label="Loading roadmap" className="flex flex-1 flex-col motion-safe:animate-pulse md:min-h-0 md:flex-row">
+      <div className="flex h-[60vh] items-center justify-center gap-10 overflow-hidden p-6 md:h-auto md:flex-1">
+        {[2, 2, 2].map((cards, col) => (
+          <div key={col} className="w-48 shrink-0 space-y-4 lg:w-56">
+            <div className={`h-4 w-24 ${ghost}`} />
+            {Array.from({ length: cards }, (_, i) => (
+              <div key={i} className="h-[84px] rounded-lg border border-slate-200 bg-white p-3">
+                <div className={`h-3 w-2/3 ${ghost}`} />
+                <div className={`mt-2 h-2.5 w-1/2 ${ghost}`} />
+                <div className={`mt-3 h-2.5 w-1/3 ${ghost}`} />
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
+      <div className="space-y-4 border-slate-200 bg-slate-50 p-4 md:w-96 md:border-l">
+        <div className="h-44 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+          <div className={`h-4 w-1/2 ${ghost}`} />
+          <div className={`mt-2 h-3 w-5/6 ${ghost}`} />
+          <div className={`mt-6 h-8 w-2/3 ${ghost}`} />
+          <div className={`mt-6 h-1.5 w-full ${ghost}`} />
+        </div>
+        <div className="h-24 rounded-xl border border-dashed border-slate-300" />
+      </div>
+    </div>
+  )
+}
 
 type Props = { journey: Journey; onChange: (journey: Journey) => void }
 
@@ -28,8 +61,18 @@ export function RoadmapView({ journey, onChange }: Props) {
   const roadmap = roadmapQuery.data
   const meta = metaQuery.data
   const error = roadmapQuery.error ?? metaQuery.error
-  if (error) return <p className="m-auto text-red-600">Couldn't load roadmap: {error.message}</p>
-  if (!roadmap || !meta) return <p className="m-auto text-slate-500">Building your roadmap…</p>
+  if (error)
+    return (
+      <ErrorState
+        message={`Couldn't load your roadmap: ${error.message}`}
+        code={'code' in error ? String(error.code) : undefined}
+        onRetry={() => {
+          if (roadmapQuery.error) roadmapQuery.refetch()
+          if (metaQuery.error) metaQuery.refetch()
+        }}
+      />
+    )
+  if (!roadmap || !meta) return <RoadmapSkeleton />
 
   const details = new Map(stepQueries.flatMap((q) => (q.data ? [[q.data.step.stepId, q.data] as const] : [])))
   const prerequisites = new Map([...details].map(([id, d]) => [id, d.prerequisites]))
