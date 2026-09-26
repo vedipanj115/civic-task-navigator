@@ -1,31 +1,41 @@
-import mock from './mock/roadmap.json'
-import type { RoadmapRequest, RoadmapResponse, Step } from './types'
+import metaFixture from './mock/meta.json'
+import roadmapFixture from './mock/roadmap.json'
+import { applyProgress } from './mock/server'
+import stepsFixture from './mock/steps.json'
+import type {
+  CitiesMetaResponse,
+  City,
+  Roadmap,
+  RoadmapRequest,
+  ResolveResponse,
+  StepDetailResponse,
+} from './types'
 
-const mockRoadmap = mock as RoadmapResponse
+// ponytail: every function here mocks a docs/04-API-CONTRACT.md route. Swap each body for
+// fetch(`${import.meta.env.VITE_API_BASE_URL}/...`) once the API is up; callers won't change.
 
-const gstStep: Step = {
-  id: 'gst',
-  title: 'GST registration',
-  documents: ['PAN card', 'Aadhaar card', 'Registered rent agreement', 'Passport-size photo'],
-  office: 'GST portal — online',
-  fee: 'Free',
-  processingTime: 'Up to 7 working days',
-  applyLink: 'https://reg.gst.gov.in/registration/',
-  sourceUrl: 'https://www.gst.gov.in',
-  verifiedOn: '2026-09-20',
-  dependsOn: ['pan', 'rent'],
-  dependencyReason: { pan: 'GSTIN is PAN-based', rent: 'Place of business proof' },
+const baseRoadmap = roadmapFixture as Roadmap
+const stepExtras = stepsFixture as Record<string, Pick<StepDetailResponse, 'documents' | 'prerequisites'>>
+
+// GET /v1/meta/cities
+export async function fetchMeta(): Promise<CitiesMetaResponse> {
+  return metaFixture as CitiesMetaResponse
 }
 
-// ponytail: fakes backend applicability for the demo; only turnover is honoured. Delete once the real endpoint exists.
-export async function fetchRoadmap(request: RoadmapRequest): Promise<RoadmapResponse> {
-  // Must match the option label in TaskEntry's QUESTIONS.
-  if (request.answers.turnover !== '₹20 lakh or more') return mockRoadmap
-  return {
-    ...mockRoadmap,
-    stages: mockRoadmap.stages.map((s) =>
-      s.stage === 2 ? { ...s, steps: [...s.steps, gstStep] } : s,
-    ),
-    excludedSteps: mockRoadmap.excludedSteps.filter((s) => s.stepId !== 'gst'),
-  }
+// POST /v1/resolve — the mock matches every query to the one procedure we have.
+export async function resolveTask(_query: string, _city: City): Promise<ResolveResponse> {
+  const { procedureId, name } = baseRoadmap.procedure
+  return { resolved: true, procedureId, confidence: 1, candidates: [{ procedureId, name, score: 1 }] }
+}
+
+// POST /v1/roadmap — the mock ignores procedureId/answers; only completedStepIds changes the result.
+export async function fetchRoadmap(request: RoadmapRequest): Promise<Roadmap> {
+  return applyProgress(baseRoadmap, request.completedStepIds)
+}
+
+// GET /v1/steps/{stepId}
+export async function fetchStep(stepId: string): Promise<StepDetailResponse> {
+  const rs = baseRoadmap.steps.find((s) => s.step.stepId === stepId)
+  if (!rs) throw new Error('STEP_NOT_FOUND')
+  return { step: rs.step, ...stepExtras[stepId], sourceHealth: rs.sourceHealth }
 }

@@ -1,0 +1,60 @@
+{
+  "step_pan": {
+    "documents": [
+      { "documentId": "doc_aadhaar", "name": "Aadhaar card", "source": "CITIZEN_HELD" },
+      { "documentId": "doc_photo", "name": "Passport-size photo", "source": "CITIZEN_HELD" }
+    ],
+    "prerequisites": []
+  },
+  "step_rent_agreement": {
+    "documents": [
+      { "documentId": "doc_property_papers", "name": "Owner's property papers", "source": "CITIZEN_HELD" },
+      { "documentId": "doc_aadhaar", "name": "Aadhaar card", "source": "CITIZEN_HELD" },
+      { "documentId": "doc_draft_agreement", "name": "Draft rent agreement", "source": "CITIZEN_HELD" }
+    ],
+    "prerequisites": []
+  },
+  "step_gumasta": {
+    "documents": [
+      { "documentId": "doc_pan_card", "name": "PAN card", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_pan" },
+      { "documentId": "doc_rent_agreement", "name": "Registered rent agreement", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_rent_agreement" },
+      { "documentId": "doc_owner_noc", "name": "Owner's NOC", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_rent_agreement" },
+      { "documentId": "doc_shop_photo", "name": "Photo of shop with name board", "source": "CITIZEN_HELD" }
+    ],
+    "prerequisites": [
+      { "dependsOnStepId": "step_pan", "type": "DOCUMENT", "reason": "The Gumasta application requires the applicant's PAN.", "sourceUrl": "https://portal.mcgm.gov.in" },
+      { "dependsOnStepId": "step_rent_agreement", "type": "DOCUMENT", "reason": "The Gumasta application needs the rent agreement and owner's NOC as proof of premises.", "sourceUrl": "https://portal.mcgm.gov.in" }
+    ]
+  },
+  "step_udyam": {
+    "documents": [
+      { "documentId": "doc_aadhaar", "name": "Aadhaar card", "source": "CITIZEN_HELD" },
+      { "documentId": "doc_pan_card", "name": "PAN card", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_pan" }
+    ],
+    "prerequisites": [
+      { "dependsOnStepId": "step_pan", "type": "DOCUMENT", "reason": "The Udyam form needs the owner's PAN.", "sourceUrl": "https://udyamregistration.gov.in" }
+    ]
+  },
+  "step_fssai": {
+    "documents": [
+      { "documentId": "doc_gumasta_certificate", "name": "Shop & Establishment certificate", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_gumasta" },
+      { "documentId": "doc_aadhaar", "name": "Aadhaar card", "source": "CITIZEN_HELD" },
+      { "documentId": "doc_food_items_list", "name": "List of food items", "source": "CITIZEN_HELD" }
+    ],
+    "prerequisites": [
+      { "dependsOnStepId": "step_gumasta", "type": "DOCUMENT", "reason": "FSSAI application requires the Gumasta certificate.", "sourceUrl": "https://foscos.fssai.gov.in" }
+    ]
+  },
+  "step_bank_account": {
+    "documents": [
+      { "documentId": "doc_pan_card", "name": "PAN card", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_pan" },
+      { "documentId": "doc_gumasta_certificate", "name": "Shop & Establishment certificate", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_gumasta" },
+      { "documentId": "doc_udyam_certificate", "name": "Udyam certificate", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_udyam" }
+    ],
+    "prerequisites": [
+      { "dependsOnStepId": "step_gumasta", "type": "DOCUMENT", "reason": "Banks ask for the Gumasta certificate as proof of business.", "sourceUrl": "https://www.rbi.org.in" },
+      { "dependsOnStepId": "step_udyam", "type": "DOCUMENT", "reason": "The Udyam certificate is used for the bank's business KYC.", "sourceUrl": "https://www.rbi.org.in" },
+      { "dependsOnStepId": "step_pan", "type": "DOCUMENT", "reason": "A current account needs the owner's PAN for KYC.", "sourceUrl": "https://www.rbi.org.in" }
+    ]
+  }
+}
