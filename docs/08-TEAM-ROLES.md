@@ -5,8 +5,8 @@
 | Slot | Person | GitHub | Role |
 |---|---|---|---|
 | M1 | Vivaan | @vivaannk07 | Frontend / Product |
-| M2 | _claim in issue #1_ | | Backend / Engine |
-| M3 | _claim in issue #1_ | | Data / Curation |
+| M2 | Yuti | @yutijain | Backend / Engine |
+| M3 | Pahal | @Pahal5 | Data / Curation |
 | M4 | Vedika | @vedipanj115 | Integration / QA / Specs |
 
 **Vivaan is team leader**: scope decisions, faculty communication, unblocking people.
