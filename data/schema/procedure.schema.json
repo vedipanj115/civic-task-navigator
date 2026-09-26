@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "procedure.schema.json",
+  "title": "Procedure",
+  "description": "One civic task a citizen can complete, e.g. 'Register a shop under Shops & Establishments Act'. Made of many Steps (see step.schema.json).",
+  "type": "object",
+  "required": ["_id", "title", "taskKeywords", "state", "sourceId", "lastVerified", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Unique slug id, e.g. 'shop-establishment-gumasta'"
+    },
+    "title": {
+      "type": "string",
+      "description": "Display name, e.g. 'Shop & Establishment Registration (Gumasta)'"
+    },
+    "taskKeywords": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Lowercased keywords/synonyms the matcher checks against free-text task input, e.g. ['shop registration', 'gumasta', 'open a shop', 'register my store']"
+    },
+    "state": {
+      "type": "string",
+      "description": "e.g. 'Maharashtra'. Use 'all' if nationally applicable (e.g. PAN)."
+    },
+    "city": {
+      "type": ["string", "null"],
+      "description": "e.g. 'Mumbai'. null if state-wide/national."
+    },
+    "applicantType": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string",
+        "enum": ["proprietorship", "partnership", "pvt_ltd", "llp", "any"]
+      },
+      "description": "Which entity types this procedure applies to; null/['any'] if it applies to everyone"
+    },
+    "sourceId": {
+      "type": "string",
+      "description": "_id reference into sources.json — the primary official source for this procedure"
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["verified", "unverified", "missing"],
+      "description": "Overall curation status. Must not be 'verified' unless every required field on every step is confirmed against the official source."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Free-text curator notes, e.g. 'Fee schedule not published online — confirm by phone with MCGM ward office'"
+    }
+  }
+}

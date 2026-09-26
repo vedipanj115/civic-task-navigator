@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "step.schema.json",
+  "title": "ProcedureStep",
+  "description": "One node in the dependency graph for a Procedure. M2's engine reads dependsOn to build the topological order; M1 renders each step as a graph node and its detail panel.",
+  "type": "object",
+  "required": ["_id", "procedureId", "stepNumber", "title", "dependsOn", "sourceUrl", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Unique slug id, e.g. 'gumasta-step-1'"
+    },
+    "procedureId": {
+      "type": "string",
+      "description": "_id reference into procedures.json"
+    },
+    "stepNumber": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Display order hint only — actual execution order comes from dependsOn, not this number"
+    },
+    "title": {
+      "type": "string",
+      "description": "Short imperative label, e.g. 'Submit online application on Aaple Sarkar'"
+    },
+    "description": {
+      "type": ["string", "null"],
+      "description": "1-3 sentence plain-language explanation of what happens in this step"
+    },
+    "department": {
+      "type": ["string", "null"],
+      "description": "Office/authority responsible, e.g. 'Maharashtra Labour Department'"
+    },
+    "documents": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Documents needed to complete this step, e.g. ['Rent agreement or ownership proof', 'Aadhaar card']"
+    },
+    "fee": {
+      "type": ["string", "number", "null"],
+      "description": "Exact amount if published (number, INR) or a string like 'Not published — contact office'. null means the source doesn't charge/mention a fee for this step."
+    },
+    "processingTime": {
+      "type": ["string", "null"],
+      "description": "e.g. '3-5 working days'. null if not stated by the source."
+    },
+    "applicationUrl": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Direct link to the form/portal page for this step, not the domain homepage"
+    },
+    "sourceUrl": {
+      "type": "string",
+      "format": "uri",
+      "description": "The specific official page this step's facts were extracted from"
+    },
+    "dependsOn": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Array of other step _ids that must be complete before this one. Empty array = no prerequisite (can start immediately)."
+    },
+    "dependencyReason": {
+      "type": ["string", "null"],
+      "description": "Why the dependency exists, shown as the graph edge label, e.g. 'Application form requires uploaded proof of premises'"
+    },
+    "applicability": {
+      "type": ["object", "null"],
+      "properties": {
+        "condition": {
+          "type": "string",
+          "description": "Machine-checkable condition string, e.g. 'businessType == \"food\"' or 'turnover > 2000000'"
+        },
+        "excludedReason": {
+          "type": "string",
+          "description": "Human-readable reason shown in the excluded-steps list when the condition fails, e.g. 'Only required for food-handling businesses'"
+        }
+      },
+      "required": ["condition", "excludedReason"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["verified", "unverified", "missing"],
+      "description": "verified = confirmed against sourceUrl by a team member; unverified = extracted but not yet double-checked; missing = the official source genuinely does not provide this field (do NOT invent a value instead)"
+    },
+    "lastVerified": {
+      "type": ["string", "null"],
+      "format": "date"
+    }
+  }
+}

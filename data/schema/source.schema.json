@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "source.schema.json",
+  "title": "Source",
+  "description": "An official government portal, department site, or open-data resource that a Procedure or Step cites as its origin.",
+  "type": "object",
+  "required": ["_id", "name", "url", "sourceType", "governmentLevel", "lastVerified", "active"],
+  "additionalProperties": false,
+  "properties": {
+    "_id": {
+      "type": "string",
+      "description": "Unique slug id, e.g. 'mcgm-shops-establishments'"
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable name of the portal/department, e.g. 'Municipal Corporation of Greater Mumbai'"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The specific official page used, not just the domain homepage"
+    },
+    "sourceType": {
+      "type": "string",
+      "enum": [
+        "official_api",
+        "official_open_data",
+        "official_government_portal",
+        "ministry_state_municipal_page",
+        "government_linked_service_directory"
+      ],
+      "description": "Matches the Source Priority list (roadmap doc section 6). Never 'third_party'."
+    },
+    "governmentLevel": {
+      "type": "string",
+      "enum": ["central", "state", "municipal"]
+    },
+    "department": {
+      "type": ["string", "null"],
+      "description": "e.g. 'Maharashtra Labour Department', 'FSSAI', 'Income Tax Department / Protean'"
+    },
+    "state": {
+      "type": ["string", "null"],
+      "description": "null for central/national sources"
+    },
+    "lastVerified": {
+      "type": "string",
+      "format": "date",
+      "description": "YYYY-MM-DD — the date a team member personally confirmed this URL is live and accurate"
+    },
+    "verifiedBy": {
+      "type": ["string", "null"],
+      "description": "Team member name/initials who checked it"
+    },
+    "active": {
+      "type": "boolean",
+      "description": "false if the portal has moved/deprecated and needs re-checking"
+    }
+  }
+}

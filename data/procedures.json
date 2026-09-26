@@ -1,0 +1,72 @@
+[
+  {
+    "_id": "shop-establishment-gumasta",
+    "title": "Shop & Establishment Registration (Gumasta)",
+    "taskKeywords": [
+      "shop registration", "gumasta", "open a shop", "register my store",
+      "register my shop", "start a business", "open a small restaurant",
+      "start a food stall", "commercial establishment registration"
+    ],
+    "state": "Maharashtra",
+    "city": "Mumbai",
+    "applicantType": ["proprietorship", "partnership", "pvt_ltd", "llp"],
+    "sourceId": "aaple-sarkar",
+    "lastVerified": "2026-09-26",
+    "status": "unverified",
+    "notes": "Registration/intimation is filed on Aaple Sarkar under the Maharashtra Shops and Establishments Act, 2017. Fee and processing-time figures below are marked unverified — every third-party source found repeats different numbers, so these MUST be confirmed directly on the portal before demo day."
+  },
+  {
+    "_id": "fssai-registration",
+    "title": "FSSAI Food Business Registration/License",
+    "taskKeywords": [
+      "fssai", "food license", "start a food stall", "open a restaurant",
+      "food safety registration", "sell food"
+    ],
+    "state": "Maharashtra",
+    "city": "Mumbai",
+    "applicantType": ["proprietorship", "partnership", "pvt_ltd", "llp"],
+    "sourceId": "foscos",
+    "lastVerified": "2026-09-26",
+    "status": "missing",
+    "notes": "TODO: not yet curated. Register on FoSCoS, extract steps/fees/turnover-based license tier."
+  },
+  {
+    "_id": "udyam-msme-registration",
+    "title": "Udyam / MSME Registration",
+    "taskKeywords": [
+      "udyam", "msme", "small business registration", "register my company",
+      "startup registration"
+    ],
+    "state": "all",
+    "city": null,
+    "applicantType": ["proprietorship", "partnership", "pvt_ltd", "llp"],
+    "sourceId": "udyam",
+    "lastVerified": "2026-09-26",
+    "status": "missing",
+    "notes": "TODO: not yet curated."
+  },
+  {
+    "_id": "pan-application",
+    "title": "PAN Card Application",
+    "taskKeywords": ["pan card", "pan application", "tax id", "permanent account number"],
+    "state": "all",
+    "city": null,
+    "applicantType": ["proprietorship", "partnership", "pvt_ltd", "llp"],
+    "sourceId": "protean-pan",
+    "lastVerified": "2026-09-26",
+    "status": "missing",
+    "notes": "TODO: not yet curated."
+  },
+  {
+    "_id": "current-bank-account",
+    "title": "Open a Business Current Bank Account",
+    "taskKeywords": ["bank account", "current account", "open a business account"],
+    "state": "all",
+    "city": null,
+    "applicantType": ["proprietorship", "partnership", "pvt_ltd", "llp"],
+    "sourceId": "aaple-sarkar",
+    "lastVerified": "2026-09-26",
+    "status": "missing",
+    "notes": "TODO: not yet curated. Note: this is bank-side, not a government portal step — find the correct authoritative source (RBI KYC circular) rather than a random bank's page."
+  }
+]

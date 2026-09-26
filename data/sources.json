@@ -1,0 +1,86 @@
+[
+  {
+    "_id": "aaple-sarkar",
+    "name": "Aaple Sarkar (Maharashtra Govt. Services Portal)",
+    "url": "https://aaplesarkar.mahaonline.gov.in/",
+    "sourceType": "official_government_portal",
+    "governmentLevel": "state",
+    "department": "Maharashtra Labour Department",
+    "state": "Maharashtra",
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "maha-labour-dept",
+    "name": "Maharashtra Labour Department",
+    "url": "https://mahakamgar.gov.in/",
+    "sourceType": "ministry_state_municipal_page",
+    "governmentLevel": "state",
+    "department": "Maharashtra Labour Department",
+    "state": "Maharashtra",
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "mcgm",
+    "name": "Municipal Corporation of Greater Mumbai",
+    "url": "https://portal.mcgm.gov.in/",
+    "sourceType": "ministry_state_municipal_page",
+    "governmentLevel": "municipal",
+    "department": "MCGM",
+    "state": "Maharashtra",
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "nsws",
+    "name": "National Single Window System",
+    "url": "https://www.nsws.gov.in/",
+    "sourceType": "official_government_portal",
+    "governmentLevel": "central",
+    "department": "DPIIT / Invest India",
+    "state": null,
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "foscos",
+    "name": "FoSCoS (FSSAI licensing/registration system)",
+    "url": "https://foscos.fssai.gov.in/",
+    "sourceType": "official_government_portal",
+    "governmentLevel": "central",
+    "department": "FSSAI",
+    "state": null,
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "udyam",
+    "name": "Udyam Registration Portal (MSME)",
+    "url": "https://udyamregistration.gov.in/",
+    "sourceType": "official_government_portal",
+    "governmentLevel": "central",
+    "department": "Ministry of MSME",
+    "state": null,
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  },
+  {
+    "_id": "protean-pan",
+    "name": "Protean eGov Technologies (PAN services, authorized by Income Tax Dept.)",
+    "url": "https://www.protean-tinpan.com/",
+    "sourceType": "official_government_portal",
+    "governmentLevel": "central",
+    "department": "Income Tax Department",
+    "state": null,
+    "lastVerified": "2026-09-26",
+    "verifiedBy": null,
+    "active": true
+  }
+]
