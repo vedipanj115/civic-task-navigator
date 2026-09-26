@@ -129,6 +129,6 @@
       "reason": "Small premises with no LPG bank — not required."
     }
   ],
-  "criticalPathDays": 39,
+  "criticalPathDays": 52,
   "totalCost": 4207
 }
