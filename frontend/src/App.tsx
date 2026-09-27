@@ -34,27 +34,27 @@ function App() {
   if (showLanding) return <LandingPage onGetStarted={() => setShowLanding(false)} />
 
   return (
-    <div className="flex h-screen flex-col bg-slate-50 text-slate-900">
-      <header className="flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
+    <div className="flex h-screen flex-col bg-ink-100 text-ink-900">
+      <header className="flex items-center justify-between border-b border-ink-200 bg-white px-6 py-4">
         <div>
           <div className="flex flex-wrap items-baseline gap-x-3">
             <h1 className="text-xl font-semibold">
-              <button onClick={goHome} className="hover:text-indigo-600">
+              <button onClick={goHome} className="hover:text-brand-600">
                 Civic Task Navigator
               </button>
             </h1>
-            {city && <span className="text-sm font-medium text-slate-600">{city}</span>}
+            {city && <span className="text-sm font-medium text-ink-700">{city}</span>}
           </div>
-          <p className="text-sm text-slate-500">Municipal bureaucracy path visualizer</p>
+          <p className="text-sm text-ink-600">Municipal bureaucracy path visualizer</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setShowAdmin((v) => !v)} className="text-sm text-slate-600 underline hover:text-slate-900">
+          <button onClick={() => setShowAdmin((v) => !v)} className="text-sm text-ink-700 underline hover:text-ink-900">
             {showAdmin ? 'Back' : 'Admin'}
           </button>
           {journey && !showAdmin && (
             <button
               onClick={() => setJourney(null)}
-              className="rounded-md border border-slate-300 px-3 py-1.5 text-sm hover:bg-slate-100"
+              className="rounded-md border border-ink-300 px-3 py-1.5 text-sm hover:bg-ink-100"
             >
               New task
             </button>
@@ -70,7 +70,7 @@ function App() {
           <TaskEntry onSubmit={startJourney} />
         )}
       </main>
-      <footer className="border-t border-slate-200 bg-white px-6 py-3 text-xs text-slate-500">
+      <footer className="border-t border-ink-200 bg-white px-6 py-3 text-xs text-ink-600">
         Guidance assembled from official sources. Always confirm on the linked government page before applying.
       </footer>
     </div>

@@ -6,9 +6,9 @@ import { ErrorState } from './ErrorState'
 
 // docs/07-DESIGN-SYSTEM.md: FRESH ok, AGEING warn, STALE danger. Icon + text, never colour alone.
 const CHIP: Record<SourceHealth, { className: string; icon: string }> = {
-  FRESH: { className: 'bg-emerald-50 text-emerald-700 ring-emerald-200', icon: '✓' },
-  AGEING: { className: 'bg-amber-50 text-amber-700 ring-amber-200', icon: '!' },
-  STALE: { className: 'bg-red-50 text-red-700 ring-red-200', icon: '✕' },
+  FRESH: { className: 'bg-ok-050 text-ok-700 ring-ok-700/25', icon: '✓' },
+  AGEING: { className: 'bg-warn-050 text-warn-700 ring-warn-700/25', icon: '!' },
+  STALE: { className: 'bg-danger-050 text-danger-700 ring-danger-700/25', icon: '✕' },
 }
 
 const COLUMNS = ['Step', 'Department', 'Source URL', 'Verified on', 'Health', 'Age (days)']
@@ -27,9 +27,9 @@ function hostname(url: string) {
 
 function TableShell({ children }: { children: ReactNode }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
+    <div className="overflow-x-auto rounded-lg border border-ink-200 bg-white shadow-card">
       <table className="w-full text-left text-sm">
-        <thead className="border-b border-slate-200 bg-slate-50 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+        <thead className="border-b border-ink-200 bg-ink-050 text-xs font-semibold tracking-wide text-ink-600 uppercase">
           <tr>
             {COLUMNS.map((c) => (
               <th key={c} scope="col" className="px-4 py-3 whitespace-nowrap">
@@ -38,7 +38,7 @@ function TableShell({ children }: { children: ReactNode }) {
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">{children}</tbody>
+        <tbody className="divide-y divide-ink-200">{children}</tbody>
       </table>
     </div>
   )
@@ -46,7 +46,7 @@ function TableShell({ children }: { children: ReactNode }) {
 
 // Loading state: same table shape with ghost cells, in RoadmapSkeleton's style.
 function AdminSourcesSkeleton() {
-  const ghost = 'h-3 rounded-lg bg-slate-200/70'
+  const ghost = 'h-3 rounded-lg bg-ink-200/70'
   return (
     <div aria-busy="true" aria-label="Loading sources" className="motion-safe:animate-pulse">
       <div className={`mb-4 w-56 ${ghost}`} />
@@ -90,23 +90,23 @@ export function AdminSources() {
     const count = (h: SourceHealth) => sources.filter((s) => s.sourceHealth === h).length
     body = (
       <>
-        <p className="mb-4 text-sm text-slate-500">
+        <p className="mb-4 text-sm text-ink-600">
           {sources.length} sources · {count('STALE')} stale · {count('AGEING')} ageing
         </p>
         <TableShell>
           {sources.map((s) => (
             <tr key={s.stepId}>
-              <td className="px-4 py-3 font-medium text-slate-900">{s.title}</td>
-              <td className="px-4 py-3 text-slate-600">
+              <td className="px-4 py-3 font-medium text-ink-900">{s.title}</td>
+              <td className="px-4 py-3 text-ink-700">
                 {s.department}
-                <span className="block text-xs text-slate-500">{s.issuingOffice}</span>
+                <span className="block text-xs text-ink-600">{s.issuingOffice}</span>
               </td>
               <td className="px-4 py-3">
-                <a href={s.sourceUrl} target="_blank" rel="noopener" className="text-indigo-600 underline hover:text-indigo-800">
+                <a href={s.sourceUrl} target="_blank" rel="noopener" className="text-brand-600 underline hover:text-brand-700">
                   {hostname(s.sourceUrl)}
                 </a>
               </td>
-              <td className="px-4 py-3 whitespace-nowrap text-slate-600">{s.verifiedOn}</td>
+              <td className="px-4 py-3 whitespace-nowrap text-ink-700">{s.verifiedOn}</td>
               <td className="px-4 py-3">
                 <span
                   className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium whitespace-nowrap ring-1 ${CHIP[s.sourceHealth].className}`}
@@ -115,7 +115,7 @@ export function AdminSources() {
                   {meta.enumLabels.sourceHealth[s.sourceHealth]}
                 </span>
               </td>
-              <td className="px-4 py-3 text-slate-600 tabular-nums">{ageDays(s.verifiedOn)}</td>
+              <td className="px-4 py-3 text-ink-700 tabular-nums">{ageDays(s.verifiedOn)}</td>
             </tr>
           ))}
         </TableShell>

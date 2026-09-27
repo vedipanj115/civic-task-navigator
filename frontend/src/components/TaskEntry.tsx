@@ -3,7 +3,7 @@ import { useState, type FormEvent } from 'react'
 import { fetchMeta, resolveTask } from '../api'
 import type { Activity, City, EntityType, JourneyAnswers, PremisesType, ResolveResponse } from '../types'
 
-const INPUT = 'w-full rounded-md border border-slate-300 bg-white px-3 py-2'
+const INPUT = 'w-full rounded-md border border-ink-300 bg-white px-3 py-2'
 
 function Choice({ name, legend, options }: { name: string; legend: string; options: Record<string, string> }) {
   return (
@@ -13,9 +13,9 @@ function Choice({ name, legend, options }: { name: string; legend: string; optio
         {Object.entries(options).map(([value, label]) => (
           <label
             key={value}
-            className="flex cursor-pointer items-center gap-2 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm has-checked:border-indigo-500 has-checked:bg-indigo-50"
+            className="flex cursor-pointer items-center gap-2 rounded-md border border-ink-300 bg-white px-3 py-2 text-sm has-checked:border-brand-500 has-checked:bg-brand-050"
           >
-            <input type="radio" name={name} value={value} required className="accent-indigo-600" />
+            <input type="radio" name={name} value={value} required className="accent-brand-600" />
             {label}
           </label>
         ))}
@@ -34,7 +34,7 @@ function ProcedureButtons({ candidates, onPick }: ProcedureButtonsProps) {
           key={c.procedureId}
           type="button"
           onClick={() => onPick(c.procedureId)}
-          className="rounded-md border border-slate-300 px-3 py-2 text-left text-sm font-medium hover:border-indigo-500 hover:bg-indigo-50"
+          className="rounded-md border border-ink-300 px-3 py-2 text-left text-sm font-medium hover:border-brand-500 hover:bg-brand-050"
         >
           {c.name}
         </button>
@@ -55,8 +55,8 @@ export function TaskEntry({ onSubmit }: Props) {
   const [error, setError] = useState<string | null>(null)
   const [picker, setPicker] = useState<Picker | null>(null)
 
-  if (metaError) return <p className="m-auto text-red-600">Couldn't load the form: {metaError.message}</p>
-  if (!meta) return <p className="m-auto text-slate-500">Loading…</p>
+  if (metaError) return <p className="m-auto text-danger-700">Couldn't load the form: {metaError.message}</p>
+  if (!meta) return <p className="m-auto text-ink-600">Loading…</p>
   const labels = meta.enumLabels
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -130,13 +130,13 @@ export function TaskEntry({ onSubmit }: Props) {
           <div className="grid grid-cols-2 gap-4">
             <label className="block space-y-1">
               <span className="font-medium">
-                Seats <span className="font-normal text-slate-500">(optional)</span>
+                Seats <span className="font-normal text-ink-600">(optional)</span>
               </span>
               <input name="seatingCapacity" type="number" min={0} step={1} className={INPUT} />
             </label>
             <label className="block space-y-1">
               <span className="font-medium">
-                Employees <span className="font-normal text-slate-500">(optional)</span>
+                Employees <span className="font-normal text-ink-600">(optional)</span>
               </span>
               <input name="employeeCount" type="number" min={0} step={1} className={INPUT} />
             </label>
@@ -145,12 +145,12 @@ export function TaskEntry({ onSubmit }: Props) {
       )}
 
       {picker && (
-        <div role="status" className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+        <div role="status" className="rounded-lg border border-ink-200 bg-white p-4 shadow-card">
           <p className="font-medium">We couldn't match “{task.trim()}” exactly. Did you mean…</p>
           <ProcedureButtons candidates={picker.candidates} onPick={(id) => onSubmit(id, picker.answers)} />
           {picker.showAll ? (
-            <div className="mt-4 border-t border-slate-100 pt-3">
-              <p className="text-sm font-medium text-slate-500">All procedures</p>
+            <div className="mt-4 border-t border-ink-200 pt-3">
+              <p className="text-sm font-medium text-ink-600">All procedures</p>
               {/* ponytail: the only procedure is already the candidate; list GET /v1/procedures once there are more. */}
               <ProcedureButtons candidates={picker.candidates} onPick={(id) => onSubmit(id, picker.answers)} />
             </div>
@@ -158,7 +158,7 @@ export function TaskEntry({ onSubmit }: Props) {
             <button
               type="button"
               onClick={() => setPicker({ ...picker, showAll: true })}
-              className="mt-3 text-sm text-indigo-600 underline hover:text-indigo-800"
+              className="mt-3 text-sm text-brand-600 underline hover:text-brand-700"
             >
               Show all procedures
             </button>
@@ -166,12 +166,12 @@ export function TaskEntry({ onSubmit }: Props) {
         </div>
       )}
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-danger-700">{error}</p>}
 
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-md bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 disabled:opacity-60"
+        className="w-full rounded-md bg-accent-500 px-4 py-2 font-semibold text-ink-900 hover:bg-accent-600 disabled:opacity-60"
       >
         {pending ? 'Finding your procedure…' : 'Show my roadmap'}
       </button>

@@ -15,21 +15,21 @@ export function RoadmapHeader({ roadmap: { procedure, totals }, city }: Props) {
   ] as const
 
   return (
-    <section className="mx-4 mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+    <section className="mx-4 mt-4 flex flex-wrap items-center justify-between gap-x-8 gap-y-4 rounded-lg border border-ink-200 bg-white p-4 shadow-card">
       <div>
         <h2 className="font-semibold">{procedure.name}</h2>
-        {city && <p className="text-sm text-slate-500">{city}</p>}
+        {city && <p className="text-sm text-ink-600">{city}</p>}
       </div>
       <dl className="flex flex-wrap items-end gap-x-6 gap-y-3 text-sm">
         {stats.map(([label, value]) => (
           <div key={label}>
-            <dt className="text-slate-500">{label}</dt>
-            <dd className="font-semibold text-slate-900">{value}</dd>
+            <dt className="text-ink-600">{label}</dt>
+            <dd className="font-semibold text-ink-900">{value}</dd>
           </div>
         ))}
-        <div className="rounded-lg bg-emerald-50 px-3 py-1.5 ring-1 ring-emerald-200">
-          <dt className="text-emerald-800">Days saved by running steps in parallel</dt>
-          <dd className="text-2xl font-semibold text-emerald-700">
+        <div className="rounded-lg bg-ok-050 px-3 py-1.5 ring-1 ring-ok-700/25">
+          <dt className="text-ok-700">Days saved by running steps in parallel</dt>
+          <dd className="text-2xl font-semibold text-ok-700">
             {totals.sequentialDaysMax - totals.criticalPathDaysMax}
           </dd>
         </div>

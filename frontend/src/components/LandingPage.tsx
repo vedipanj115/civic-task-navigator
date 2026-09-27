@@ -8,14 +8,14 @@ const FADE_UP = 'motion-safe:animate-fade-up'
 
 export function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-12 text-slate-900">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-ink-100 px-4 py-12 text-ink-900">
       <div className="w-full max-w-4xl text-center">
         <div className={FADE_UP}>
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Civic Task Navigator</h1>
-          <p className="mt-2 text-xs font-medium tracking-wide text-indigo-600 uppercase sm:text-sm">
+          <p className="mt-2 text-xs font-medium tracking-wide text-brand-600 uppercase sm:text-sm">
             Municipal bureaucracy path visualizer
           </p>
-          <p className="mx-auto mt-6 max-w-xl text-base text-slate-600 sm:text-lg">
+          <p className="mx-auto mt-6 max-w-xl text-base text-ink-700 sm:text-lg">
             Tell us what you're trying to do and we'll map out every government step, in order, with the paperwork
             you need at each one.
           </p>
@@ -26,17 +26,17 @@ export function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
             <li
               key={step.title}
               style={{ animationDelay: `${150 + i * 100}ms` }}
-              className={`relative rounded-xl border border-slate-200 bg-white p-5 shadow-sm ${FADE_UP}`}
+              className={`relative rounded-lg border border-ink-200 bg-white p-5 shadow-card ${FADE_UP}`}
             >
-              <span className="flex size-8 items-center justify-center rounded-full bg-indigo-50 text-sm font-semibold text-indigo-700 ring-1 ring-indigo-200">
+              <span className="flex size-8 items-center justify-center rounded-full bg-brand-050 text-sm font-semibold text-brand-700 ring-1 ring-brand-100">
                 {i + 1}
               </span>
               <h2 className="mt-3 font-semibold">{step.title}</h2>
-              <p className="mt-1 text-sm text-slate-500">{step.body}</p>
+              <p className="mt-1 text-sm text-ink-600">{step.body}</p>
               {i < STEPS.length - 1 && (
                 <span
                   aria-hidden
-                  className="absolute top-1/2 -right-3.5 z-10 hidden -translate-y-1/2 text-lg text-slate-400 md:block"
+                  className="absolute top-1/2 -right-3.5 z-10 hidden -translate-y-1/2 text-lg text-ink-500 md:block"
                 >
                   →
                 </span>
@@ -48,7 +48,7 @@ export function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
         <button
           onClick={onGetStarted}
           style={{ animationDelay: '500ms' }}
-          className={`mt-10 w-full rounded-md bg-indigo-600 px-6 py-2.5 font-medium text-white hover:bg-indigo-700 sm:w-auto ${FADE_UP}`}
+          className={`mt-10 w-full rounded-md bg-accent-500 px-6 py-2.5 font-semibold text-ink-900 hover:bg-accent-600 sm:w-auto ${FADE_UP}`}
         >
           Get started
         </button>

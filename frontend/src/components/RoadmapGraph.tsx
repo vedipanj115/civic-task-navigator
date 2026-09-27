@@ -24,13 +24,16 @@ const LABEL_SPACING = 22 // min vertical distance between labels in one gap
 const PORT_STEP = 6 // bent edges leave a node above its centre and enter below it, 6px apart
 
 const CARD: Record<StepStatus, string> = {
-  AVAILABLE: 'border-slate-300 bg-white',
-  BLOCKED: 'border-dashed border-slate-300 bg-slate-100 text-slate-400',
-  COMPLETED: 'border-emerald-500 bg-emerald-50',
-  NOT_APPLICABLE: 'border-dashed border-slate-300 bg-slate-100 text-slate-400',
+  AVAILABLE: 'border-ink-300 bg-white',
+  BLOCKED: 'border-dashed border-ink-300 bg-ink-100 text-ink-500',
+  COMPLETED: 'border-ok-700 bg-ok-050',
+  NOT_APPLICABLE: 'border-dashed border-ink-300 bg-ink-100 text-neutral-700',
 }
 
-type StepNodeData = { rs: RoadmapStep; statusLabel: string; isSelected: boolean }
+type StepNodeData = { rs: RoadmapStep; statusLabel: string; isSelected: boolean; isUnlocked: boolean }
+
+// docs/07 §5: the product's one animation, on a step that just became available.
+const UNLOCK = 'motion-safe:animate-unlock'
 
 // Card content shared by the graph node (one line each, truncated) and the mobile list (wraps, shows reasons).
 function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLabel: string; full?: boolean }) {
@@ -39,19 +42,19 @@ function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLa
   const waiting = `Waiting on ${rs.blockedBy.map((b) => b.shortTitle).join(', ')}`
   const statusLine =
     rs.status === 'COMPLETED' ? (
-      <span className="font-medium text-emerald-700">✓ {statusLabel}</span>
+      <span className="font-medium text-ok-700">✓ {statusLabel}</span>
     ) : rs.status === 'AVAILABLE' ? (
-      <span className="font-medium text-indigo-600">{statusLabel}</span>
+      <span className="font-medium text-info-700">{statusLabel}</span>
     ) : (
       <span>{blocked && !full ? waiting : statusLabel}</span>
     )
 
   return (
     <>
-      <div className={`${clip} text-sm font-semibold ${blocked ? '' : 'text-slate-900'}`} title={rs.step.title}>
+      <div className={`${clip} text-sm font-semibold ${blocked ? '' : 'text-ink-900'}`} title={rs.step.title}>
         {full ? rs.step.title : rs.step.shortTitle}
       </div>
-      <div className={`mt-0.5 ${clip} ${blocked ? '' : 'text-slate-500'}`}>
+      <div className={`mt-0.5 ${clip} ${blocked ? '' : 'text-ink-600'}`}>
         {formatFee(rs.step)} · {formatDays(rs.step)}
       </div>
       <div className={`mt-1.5 ${clip}`} title={blocked && !full ? waiting : undefined}>
@@ -61,7 +64,7 @@ function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLa
         <ul className="mt-1 space-y-0.5">
           {rs.blockedBy.map((b) => (
             <li key={b.stepId}>
-              Waiting on <span className="font-medium text-slate-600">{b.shortTitle}</span>: {b.reason}
+              Waiting on <span className="font-medium text-ink-700">{b.shortTitle}</span>: {b.reason}
             </li>
           ))}
         </ul>
@@ -70,12 +73,12 @@ function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLa
   )
 }
 
-function StepNode({ data: { rs, statusLabel, isSelected } }: NodeProps<StepNodeData>) {
+function StepNode({ data: { rs, statusLabel, isSelected, isUnlocked } }: NodeProps<StepNodeData>) {
   return (
     <div
-      className={`h-[84px] w-64 cursor-pointer rounded-lg border px-3 py-2 text-xs shadow-sm ${CARD[rs.status]} ${
-        isSelected ? 'ring-2 ring-indigo-500 ring-offset-2' : ''
-      }`}
+      className={`h-[84px] w-64 cursor-pointer rounded-lg border px-3 py-2 text-xs shadow-card ${CARD[rs.status]} ${
+        isSelected ? 'ring-2 ring-brand-500 ring-offset-2' : ''
+      } ${isUnlocked ? UNLOCK : ''}`}
     >
       <Handle type="target" position={Position.Left} className="opacity-0!" />
       <StepBody rs={rs} statusLabel={statusLabel} />
@@ -88,9 +91,9 @@ type StageData = { stage: number; done: number; total: number }
 
 function StageHeader({ data, className = 'w-64' }: Pick<NodeProps<StageData>, 'data'> & { className?: string }) {
   return (
-    <div className={`flex ${className} items-baseline justify-between border-b-2 border-slate-300 pb-2`}>
-      <span className="text-sm font-semibold tracking-wide text-slate-700 uppercase">Stage {data.stage}</span>
-      <span className="text-xs text-slate-500">
+    <div className={`flex ${className} items-baseline justify-between border-b-2 border-ink-300 pb-2`}>
+      <span className="text-sm font-semibold tracking-wide text-ink-700 uppercase">Stage {data.stage}</span>
+      <span className="text-xs text-ink-600">
         {data.done}/{data.total} done
       </span>
     </div>
@@ -139,7 +142,7 @@ function WhyEdge(props: EdgeProps<WhyEdgeData>) {
         <div
           style={{ transform: `translate(-50%, -50%) translate(${data.labelX}px, ${baseY + data.labelOffsetY}px)` }}
           title={data.reason}
-          className="pointer-events-auto absolute max-w-[150px] truncate rounded border border-slate-200 bg-white px-1.5 py-0.5 text-[10px] leading-tight text-slate-600"
+          className="pointer-events-auto absolute max-w-[150px] truncate rounded border border-ink-200 bg-white px-1.5 py-0.5 text-[10px] leading-tight text-ink-700"
         >
           {data.reason}
         </div>
@@ -201,7 +204,7 @@ function buildEdges(links: Link[], status: (id: string) => StepStatus | undefine
     }
 
     const push = (l: Link, laneX: number | undefined, labelX: number) => {
-      const color = status(l.sourceId) === 'COMPLETED' ? '#10b981' : '#94a3b8'
+      const color = status(l.sourceId) === 'COMPLETED' ? 'var(--ok-700)' : 'var(--ink-500)'
       edges.push({
         id: `${l.sourceId}->${l.targetId}`,
         source: l.sourceId,
@@ -234,10 +237,10 @@ const stageCounts = (stepIds: string[], byId: Map<string, RoadmapStep>) => ({
   total: stepIds.length,
 })
 
-type ListProps = Pick<Props, 'roadmap' | 'statusLabels' | 'selectedId' | 'onSelect'>
+type ListProps = Pick<Props, 'roadmap' | 'statusLabels' | 'selectedId' | 'unlockedIds' | 'onSelect'>
 
 // Accessible stage-ordered alternative to the graph (docs/06-UI-SPEC.md §6), primary view below 640px.
-export function StepList({ roadmap, statusLabels, selectedId, onSelect }: ListProps) {
+export function StepList({ roadmap, statusLabels, selectedId, unlockedIds, onSelect }: ListProps) {
   const byId = new Map(roadmap.steps.map((rs) => [rs.step.stepId, rs]))
   return (
     <ol className="space-y-6 p-4">
@@ -253,9 +256,9 @@ export function StepList({ roadmap, statusLabels, selectedId, onSelect }: ListPr
                     type="button"
                     aria-pressed={id === selectedId}
                     onClick={() => onSelect(id === selectedId ? null : id)}
-                    className={`block w-full rounded-lg border px-3 py-2 text-left text-xs shadow-sm ${CARD[rs.status]} ${
-                      id === selectedId ? 'ring-2 ring-indigo-500 ring-offset-2' : ''
-                    }`}
+                    className={`block w-full rounded-lg border px-3 py-2 text-left text-xs shadow-card ${CARD[rs.status]} ${
+                      id === selectedId ? 'ring-2 ring-brand-500 ring-offset-2' : ''
+                    } ${unlockedIds.has(id) ? UNLOCK : ''}`}
                   >
                     <StepBody rs={rs} statusLabel={statusLabels[rs.status]} full />
                   </button>
@@ -275,10 +278,11 @@ type Props = {
   prerequisites: Map<string, Array<{ dependsOnStepId: string; reason: string }>>
   statusLabels: Record<StepStatus, string>
   selectedId: string | null
+  unlockedIds: ReadonlySet<string> // just went BLOCKED -> AVAILABLE; cleared by RoadmapView after one play
   onSelect: (id: string | null) => void
 }
 
-export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId, onSelect }: Props) {
+export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId, unlockedIds, onSelect }: Props) {
   const byId = new Map(roadmap.steps.map((rs) => [rs.step.stepId, rs]))
   const pos = new Map<string, { col: number; row: number }>()
   roadmap.stages.forEach(({ stepIds }, col) => stepIds.forEach((id, row) => pos.set(id, { col, row })))
@@ -297,7 +301,7 @@ export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId,
         id,
         type: 'step',
         position: { x: col * COL_WIDTH, y: TOP + row * ROW_HEIGHT },
-        data: { rs, statusLabel: statusLabels[rs.status], isSelected: id === selectedId },
+        data: { rs, statusLabel: statusLabels[rs.status], isSelected: id === selectedId, isUnlocked: unlockedIds.has(id) },
       }
     }),
   ])
