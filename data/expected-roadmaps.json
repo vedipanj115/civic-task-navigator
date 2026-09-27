@@ -1,0 +1,337 @@
+[
+  {
+    "journey": {
+      "journeyId": "jny_demo_baseline",
+      "procedureId": "proc_food_outlet_mumbai",
+      "answers": {
+        "city": "MUMBAI",
+        "entityType": "PROPRIETORSHIP",
+        "activity": "FOOD_SERVICE",
+        "annualTurnoverInr": 1800000,
+        "premisesType": "RENTED",
+        "seatingCapacity": 20,
+        "employeeCount": 3
+      },
+      "createdAt": "2026-09-27T00:00:00.000Z",
+      "completedStepIds": []
+    },
+    "expectedRoadmap": {
+      "journeyId": "jny_demo_baseline",
+      "procedure": {
+        "procedureId": "proc_food_outlet_mumbai",
+        "name": "Open a small food outlet",
+        "city": "MUMBAI",
+        "summary": "Everything needed to legally open and operate a small food outlet (restaurant, cafe, or food stall) in Mumbai."
+      },
+      "stages": [
+        { "stage": 1, "stepIds": ["step_pan", "step_rent_agreement"] },
+        { "stage": 2, "stepIds": ["step_gumasta", "step_udyam"] },
+        { "stage": 3, "stepIds": ["step_fssai", "step_bank_account"] }
+      ],
+      "steps": [
+        {
+          "stepId": "step_pan",
+          "status": "AVAILABLE",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": ["step_udyam"],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_rent_agreement",
+          "status": "AVAILABLE",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_gumasta",
+          "status": "BLOCKED",
+          "stage": 2,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Gumasta registration requires a copy of the applicant's PAN card as identity proof." },
+            { "stepId": "step_rent_agreement", "shortTitle": "Rent + NOC", "reason": "Gumasta registration requires proof of premises (rent agreement and owner's NOC)." }
+          ],
+          "unlocks": ["step_fssai"],
+          "missingDocumentIds": ["doc_pan_card", "doc_rent_agreement", "doc_premises_noc"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_udyam",
+          "status": "BLOCKED",
+          "stage": 2,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Udyam registration requires the applicant's PAN number." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_pan_card"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_fssai",
+          "status": "BLOCKED",
+          "stage": 3,
+          "blockedBy": [
+            { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "FSSAI registration requires the Gumasta certificate as proof of a legally registered business premises." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_gumasta_certificate"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_bank_account",
+          "status": "BLOCKED",
+          "stage": 3,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Opening a business current account requires the proprietor's/entity's PAN." },
+            { "stepId": "step_udyam", "shortTitle": "Udyam", "reason": "Banks require the Udyam registration certificate as business proof for a current account." },
+            { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "Banks require the Gumasta certificate as proof of a legally registered business for a current account." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_pan_card", "doc_udyam_certificate", "doc_gumasta_certificate"],
+          "sourceHealth": "FRESH"
+        }
+      ],
+      "excluded": [
+        { "stepId": "step_gst", "title": "GST Registration", "reason": "GST registration is not required because annual turnover is below the ₹20 lakh threshold." },
+        { "stepId": "step_company_incorporation", "title": "Company Incorporation", "reason": "Company incorporation is not required because the business is not being registered as a private limited company." }
+      ],
+      "totals": {
+        "applicableStepCount": 6,
+        "excludedStepCount": 2,
+        "totalFeeInr": 101,
+        "criticalPathDaysMin": 17,
+        "criticalPathDaysMax": 36,
+        "sequentialDaysMax": 43,
+        "distinctDepartments": 6,
+        "distinctSourceUrls": 6
+      }
+    }
+  },
+  {
+    "journey": {
+      "journeyId": "jny_demo_gumasta_completed",
+      "procedureId": "proc_food_outlet_mumbai",
+      "answers": {
+        "city": "MUMBAI",
+        "entityType": "PROPRIETORSHIP",
+        "activity": "FOOD_SERVICE",
+        "annualTurnoverInr": 1800000,
+        "premisesType": "RENTED",
+        "seatingCapacity": 20,
+        "employeeCount": 3
+      },
+      "createdAt": "2026-09-27T00:00:00.000Z",
+      "completedStepIds": ["step_pan", "step_rent_agreement", "step_udyam", "step_gumasta"]
+    },
+    "expectedRoadmap": {
+      "journeyId": "jny_demo_gumasta_completed",
+      "procedure": {
+        "procedureId": "proc_food_outlet_mumbai",
+        "name": "Open a small food outlet",
+        "city": "MUMBAI",
+        "summary": "Everything needed to legally open and operate a small food outlet (restaurant, cafe, or food stall) in Mumbai."
+      },
+      "stages": [
+        { "stage": 1, "stepIds": ["step_pan", "step_rent_agreement"] },
+        { "stage": 2, "stepIds": ["step_gumasta", "step_udyam"] },
+        { "stage": 3, "stepIds": ["step_fssai", "step_bank_account"] }
+      ],
+      "steps": [
+        {
+          "stepId": "step_pan",
+          "status": "COMPLETED",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_rent_agreement",
+          "status": "COMPLETED",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_gumasta",
+          "status": "COMPLETED",
+          "stage": 2,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_udyam",
+          "status": "COMPLETED",
+          "stage": 2,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_fssai",
+          "status": "AVAILABLE",
+          "stage": 3,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_bank_account",
+          "status": "AVAILABLE",
+          "stage": 3,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        }
+      ],
+      "excluded": [
+        { "stepId": "step_gst", "title": "GST Registration", "reason": "GST registration is not required because annual turnover is below the ₹20 lakh threshold." },
+        { "stepId": "step_company_incorporation", "title": "Company Incorporation", "reason": "Company incorporation is not required because the business is not being registered as a private limited company." }
+      ],
+      "totals": {
+        "applicableStepCount": 6,
+        "excludedStepCount": 2,
+        "totalFeeInr": 101,
+        "criticalPathDaysMin": 17,
+        "criticalPathDaysMax": 36,
+        "sequentialDaysMax": 43,
+        "distinctDepartments": 6,
+        "distinctSourceUrls": 6
+      }
+    }
+  },
+  {
+    "journey": {
+      "journeyId": "jny_high_turnover_gst_included",
+      "procedureId": "proc_food_outlet_mumbai",
+      "answers": {
+        "city": "MUMBAI",
+        "entityType": "PROPRIETORSHIP",
+        "activity": "FOOD_SERVICE",
+        "annualTurnoverInr": 2500000,
+        "premisesType": "RENTED",
+        "seatingCapacity": 20,
+        "employeeCount": 3
+      },
+      "createdAt": "2026-09-27T00:00:00.000Z",
+      "completedStepIds": []
+    },
+    "expectedRoadmap": {
+      "journeyId": "jny_high_turnover_gst_included",
+      "procedure": {
+        "procedureId": "proc_food_outlet_mumbai",
+        "name": "Open a small food outlet",
+        "city": "MUMBAI",
+        "summary": "Everything needed to legally open and operate a small food outlet (restaurant, cafe, or food stall) in Mumbai."
+      },
+      "stages": [
+        { "stage": 1, "stepIds": ["step_pan", "step_rent_agreement"] },
+        { "stage": 2, "stepIds": ["step_gumasta", "step_udyam", "step_gst"] },
+        { "stage": 3, "stepIds": ["step_fssai", "step_bank_account"] }
+      ],
+      "steps": [
+        {
+          "stepId": "step_pan",
+          "status": "AVAILABLE",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": ["step_udyam", "step_gst"],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_rent_agreement",
+          "status": "AVAILABLE",
+          "stage": 1,
+          "blockedBy": [],
+          "unlocks": [],
+          "missingDocumentIds": [],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_gumasta",
+          "status": "BLOCKED",
+          "stage": 2,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Gumasta registration requires a copy of the applicant's PAN card as identity proof." },
+            { "stepId": "step_rent_agreement", "shortTitle": "Rent + NOC", "reason": "Gumasta registration requires proof of premises (rent agreement and owner's NOC)." }
+          ],
+          "unlocks": ["step_fssai"],
+          "missingDocumentIds": ["doc_pan_card", "doc_rent_agreement", "doc_premises_noc"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_udyam",
+          "status": "BLOCKED",
+          "stage": 2,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Udyam registration requires the applicant's PAN number." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_pan_card"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_gst",
+          "status": "BLOCKED",
+          "stage": 2,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "GST registration requires the applicant's PAN." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_pan_card"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_fssai",
+          "status": "BLOCKED",
+          "stage": 3,
+          "blockedBy": [
+            { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "FSSAI registration requires the Gumasta certificate as proof of a legally registered business premises." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_gumasta_certificate"],
+          "sourceHealth": "FRESH"
+        },
+        {
+          "stepId": "step_bank_account",
+          "status": "BLOCKED",
+          "stage": 3,
+          "blockedBy": [
+            { "stepId": "step_pan", "shortTitle": "PAN", "reason": "Opening a business current account requires the proprietor's/entity's PAN." },
+            { "stepId": "step_udyam", "shortTitle": "Udyam", "reason": "Banks require the Udyam registration certificate as business proof for a current account." },
+            { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "Banks require the Gumasta certificate as proof of a legally registered business for a current account." }
+          ],
+          "unlocks": [],
+          "missingDocumentIds": ["doc_pan_card", "doc_udyam_certificate", "doc_gumasta_certificate"],
+          "sourceHealth": "FRESH"
+        }
+      ],
+      "excluded": [
+        { "stepId": "step_company_incorporation", "title": "Company Incorporation", "reason": "Company incorporation is not required because the business is not being registered as a private limited company." }
+      ],
+      "totals": {
+        "applicableStepCount": 7,
+        "excludedStepCount": 1,
+        "totalFeeInr": 101,
+        "criticalPathDaysMin": 17,
+        "criticalPathDaysMax": 36,
+        "sequentialDaysMax": 50,
+        "distinctDepartments": 7,
+        "distinctSourceUrls": 7
+      }
+    }
+  }
+]
