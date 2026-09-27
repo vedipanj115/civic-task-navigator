@@ -5,7 +5,11 @@
   "workspaces": ["shared", "api", "web"],
   "engines": { "node": ">=22" },
   "scripts": {
-    "typecheck": "tsc -p shared --noEmit"
+    "typecheck": "tsc -p shared --noEmit && npm run typecheck -w api",
+    "dev:api": "npm run dev -w api",
+    "dev:web": "npm run dev -w web",
+    "test": "npm test -w api",
+    "smoke": "node scripts/smoke.mjs"
   },
   "devDependencies": {
     "typescript": "^5"
