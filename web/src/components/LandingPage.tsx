@@ -13,7 +13,7 @@ export function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
     <div className="flex min-h-screen flex-col items-center justify-center bg-ink-100 px-4 py-12 text-ink-900">
       <div className="w-full max-w-4xl text-center">
         <div className={FADE_UP}>
-          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Civic Task Navigator</h1>
+          <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">CIVORA</h1>
           <p className="mt-2 text-xs font-medium tracking-wide text-brand-600 uppercase sm:text-sm">
             Municipal bureaucracy path visualizer
           </p>

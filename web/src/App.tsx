@@ -41,7 +41,7 @@ function App() {
           <div className="flex flex-wrap items-baseline gap-x-3">
             <h1 className="text-xl font-semibold">
               <button onClick={goHome} className="hover:text-brand-600">
-                Civic Task Navigator
+                CIVORA
               </button>
             </h1>
             {city && <span className="text-sm font-medium text-ink-700">{city}</span>}
