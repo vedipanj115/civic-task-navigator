@@ -1,67 +1,39 @@
-import metaFixture from './mock/meta.json'
-import roadmapFixture from './mock/roadmap.json'
-import { applyProgress } from './mock/server'
-import stepsFixture from './mock/steps.json'
 import type {
-  AdminSource,
-  CitiesMetaResponse,
+  AdminSourcesResponse,
+  ApiErrorResponse,
   City,
-  Roadmap,
-  RoadmapRequest,
+  MetaCitiesResponse,
+  ResolveRequest,
   ResolveResponse,
-  SourceHealth,
+  RoadmapRequest,
+  RoadmapResponse,
   StepDetailResponse,
 } from './types'
 
-// ponytail: every function here mocks a docs/04-API-CONTRACT.md route. Swap each body for
-// fetch(`${import.meta.env.VITE_API_BASE_URL}/...`) once the API is up; callers won't change.
-
-const baseRoadmap = roadmapFixture as Roadmap
-const stepExtras = stepsFixture as Record<string, Pick<StepDetailResponse, 'documents' | 'prerequisites'>>
-
-// GET /v1/meta/cities
-export async function fetchMeta(): Promise<CitiesMetaResponse> {
-  return metaFixture as CitiesMetaResponse
+// Calls the docs/04-API-CONTRACT.md routes. Relative /v1 paths: in dev, vite.config.ts proxies them to the API.
+// Non-2xx responses throw an Error carrying the envelope's `code` (docs/04 §4), which ErrorState displays.
+async function request<T>(path: string, body?: unknown): Promise<T> {
+  const res = await fetch(
+    `/v1${path}`,
+    body === undefined
+      ? undefined
+      : { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) },
+  )
+  const json: unknown = await res.json().catch(() => null)
+  if (!res.ok) {
+    const error = (json as ApiErrorResponse | null)?.error
+    throw Object.assign(new Error(error?.message ?? `Request failed (HTTP ${res.status})`), error && { code: error.code })
+  }
+  return json as T
 }
 
-// POST /v1/resolve — the mock resolves any query mentioning a food-outlet keyword; anything else is
-// unrecognised (still a 200) and returns every procedure (just ours) as a candidate for the picker.
-// ponytail: substring keyword match; the real resolver scores token overlap (docs/03-DEPENDENCY-SPEC.md §9).
-const FOOD_OUTLET_KEYWORDS = ['restaurant', 'food', 'shop', 'cafe', 'eatery', 'outlet', 'stall']
+export const fetchMeta = () => request<MetaCitiesResponse>('/meta/cities')
 
-export async function resolveTask(query: string, _city: City): Promise<ResolveResponse> {
-  const { procedureId, name } = baseRoadmap.procedure
-  const q = query.toLowerCase()
-  if (FOOD_OUTLET_KEYWORDS.some((k) => q.includes(k)))
-    return { resolved: true, procedureId, confidence: 1, candidates: [{ procedureId, name, score: 1 }] }
-  return { resolved: false, procedureId: null, confidence: 0, candidates: [{ procedureId, name, score: 0 }] }
-}
+export const resolveTask = (query: string, city: City) =>
+  request<ResolveResponse>('/resolve', { query, city } satisfies ResolveRequest)
 
-// POST /v1/roadmap — the mock ignores procedureId/answers; only completedStepIds changes the result.
-export async function fetchRoadmap(request: RoadmapRequest): Promise<Roadmap> {
-  return applyProgress(baseRoadmap, request.completedStepIds)
-}
+export const fetchRoadmap = (req: RoadmapRequest) => request<RoadmapResponse>('/roadmap', req)
 
-// GET /v1/steps/{stepId}
-export async function fetchStep(stepId: string): Promise<StepDetailResponse> {
-  const rs = baseRoadmap.steps.find((s) => s.step.stepId === stepId)
-  if (!rs) throw new Error('STEP_NOT_FOUND')
-  return { step: rs.step, ...stepExtras[stepId], sourceHealth: rs.sourceHealth }
-}
+export const fetchStep = (stepId: string) => request<StepDetailResponse>(`/steps/${encodeURIComponent(stepId)}`)
 
-// GET /v1/admin/sources — stale first, then ageing, then fresh; oldest verification first within each.
-const HEALTH_ORDER: Record<SourceHealth, number> = { STALE: 0, AGEING: 1, FRESH: 2 }
-
-export async function fetchAdminSources(): Promise<AdminSource[]> {
-  return baseRoadmap.steps
-    .map(({ step, sourceHealth }) => ({
-      stepId: step.stepId,
-      title: step.title,
-      department: step.department,
-      issuingOffice: step.issuingOffice,
-      sourceUrl: step.sourceUrl,
-      verifiedOn: step.verifiedOn,
-      sourceHealth,
-    }))
-    .sort((a, b) => HEALTH_ORDER[a.sourceHealth] - HEALTH_ORDER[b.sourceHealth] || a.verifiedOn.localeCompare(b.verifiedOn))
-}
+export const fetchAdminSources = () => request<AdminSourcesResponse>('/admin/sources')

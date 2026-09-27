@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import ReactFlow, {
   Background,
   BaseEdge,
@@ -7,6 +8,9 @@ import ReactFlow, {
   Handle,
   MarkerType,
   Position,
+  useNodesInitialized,
+  useReactFlow,
+  useStore,
   type Edge,
   type EdgeProps,
   type Node,
@@ -109,11 +113,12 @@ type WhyEdgeData = {
   corridorDir?: 1 | -1 // set when the edge skips a stage and must run between rows
   srcOffset: number // y offset from the node centre where the edge leaves / enters, so
   tgtOffset: number //   horizontals of different edges never share a line
+  showLabel?: boolean // edge hovered, or one of its steps selected
 }
 
-// Edge with its own vertical lane (laneX) and a label nudged clear of its neighbours. Edges that skip a
-// stage leave the source, drop into the corridor between rows, cross the skipped column(s) there, then
-// take their lane into the target, so they never pass behind a node.
+// Edge with its own vertical lane (laneX) and a label nudged clear of its neighbours, shown only on hover or
+// selection. Edges that skip a stage leave the source, drop into the corridor between rows, cross the skipped
+// column(s) there, then take their lane into the target, so they never pass behind a node.
 function WhyEdge(props: EdgeProps<WhyEdgeData>) {
   const { id, sourceX, sourceY, targetX, targetY, sourcePosition, targetPosition, markerEnd, style } = props
   const data = props.data!
@@ -139,17 +144,32 @@ function WhyEdge(props: EdgeProps<WhyEdgeData>) {
   return (
     <>
       <BaseEdge id={id} path={path} markerEnd={markerEnd} style={style} />
-      <EdgeLabelRenderer>
-        <div
-          style={{ transform: `translate(-50%, -50%) translate(${data.labelX}px, ${baseY + data.labelOffsetY}px)` }}
-          title={data.reason}
-          className="pointer-events-auto absolute max-w-[150px] truncate rounded border border-ink-200 bg-white px-1.5 py-0.5 text-[10px] leading-tight text-ink-700"
-        >
-          {data.reason}
-        </div>
-      </EdgeLabelRenderer>
+      {(props.selected || data.showLabel) && (
+        <EdgeLabelRenderer>
+          {/* pointer-events-none: a label appearing under the cursor must not end the edge hover that showed it. */}
+          <div
+            style={{ transform: `translate(-50%, -50%) translate(${data.labelX}px, ${baseY + data.labelOffsetY}px)` }}
+            className="pointer-events-none absolute z-10 w-max max-w-[200px] rounded border border-ink-200 bg-white px-1.5 py-0.5 text-[10px] leading-tight text-ink-700 shadow-card"
+          >
+            {data.reason}
+          </div>
+        </EdgeLabelRenderer>
+      )}
     </>
   )
+}
+
+// React Flow's fitView prop fits once, at whatever size the pane had then. Fit once nodes are measured, and
+// again when the stage layout changes or the pane resizes, so every stage stays on screen. Status toggles
+// don't move nodes, so they leave the user's zoom alone.
+function AutoFit({ layoutKey }: { layoutKey: string }) {
+  const { fitView } = useReactFlow()
+  const measured = useNodesInitialized()
+  const paneSize = useStore((s) => `${s.width}x${s.height}`)
+  useEffect(() => {
+    if (measured) fitView({ padding: 0.15 })
+  }, [measured, layoutKey, paneSize, fitView])
+  return null
 }
 
 const nodeTypes = { step: StepNode, stage: StageHeader }
@@ -284,6 +304,7 @@ type Props = {
 }
 
 export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId, unlockedIds, onSelect }: Props) {
+  const [hoveredEdgeId, setHoveredEdgeId] = useState<string | null>(null)
   const byId = new Map(roadmap.steps.map((rs) => [rs.step.stepId, rs]))
   const pos = new Map<string, { col: number; row: number }>()
   roadmap.stages.forEach(({ stepIds }, col) => stepIds.forEach((id, row) => pos.set(id, { col, row })))
@@ -330,20 +351,25 @@ export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId,
   return (
     <ReactFlow
       nodes={nodes}
-      edges={buildEdges(links, (id) => byId.get(id)?.status)}
+      edges={buildEdges(links, (id) => byId.get(id)?.status).map((e) =>
+        e.id === hoveredEdgeId || (selectedId && (e.source === selectedId || e.target === selectedId))
+          ? { ...e, data: { ...e.data!, showLabel: true } }
+          : e,
+      )}
       nodeTypes={nodeTypes}
       edgeTypes={edgeTypes}
       nodesDraggable={false}
       nodesConnectable={false}
       onNodeClick={(_, node) => onSelect(node.type === 'step' ? node.id : null)}
       onPaneClick={() => onSelect(null)}
-      fitView
-      fitViewOptions={{ padding: 0.15 }}
+      onEdgeMouseEnter={(_, edge) => setHoveredEdgeId(edge.id)}
+      onEdgeMouseLeave={() => setHoveredEdgeId(null)}
       minZoom={0.1} // default 0.5 can't fit a multi-stage graph on a phone-width pane
       // RF's overflow:hidden container can still be scrolled by focus/scrollIntoView, which shifts the
       // background and controls up and leaves a blank strip; clip makes it unscrollable.
       className="overflow-clip!"
     >
+      <AutoFit layoutKey={JSON.stringify(roadmap.stages)} />
       <Background />
       <Controls showInteractive={false} />
     </ReactFlow>

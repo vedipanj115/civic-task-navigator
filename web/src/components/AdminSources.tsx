@@ -13,10 +13,6 @@ const CHIP: Record<SourceHealth, { className: string; icon: string }> = {
 
 const COLUMNS = ['Step', 'Department', 'Source URL', 'Verified on', 'Health', 'Age (days)']
 
-// Both dates as UTC midnight so the local timezone can't shift the count by a day.
-const ageDays = (verifiedOn: string) =>
-  Math.round((Date.parse(new Date().toLocaleDateString('en-CA')) - Date.parse(verifiedOn)) / 86_400_000)
-
 function hostname(url: string) {
   try {
     return new URL(url).hostname
@@ -87,20 +83,16 @@ export function AdminSources() {
     )
   else if (!sources || !meta) body = <AdminSourcesSkeleton />
   else {
-    const count = (h: SourceHealth) => sources.filter((s) => s.sourceHealth === h).length
     body = (
       <>
         <p className="mb-4 text-sm text-ink-600">
-          {sources.length} sources · {count('STALE')} stale · {count('AGEING')} ageing
+          {sources.meta.count} sources · {sources.meta.stale} stale · {sources.meta.ageing} ageing
         </p>
         <TableShell>
-          {sources.map((s) => (
+          {sources.items.map((s) => (
             <tr key={s.stepId}>
               <td className="px-4 py-3 font-medium text-ink-900">{s.title}</td>
-              <td className="px-4 py-3 text-ink-700">
-                {s.department}
-                <span className="block text-xs text-ink-600">{s.issuingOffice}</span>
-              </td>
+              <td className="px-4 py-3 text-ink-700">{s.department}</td>
               <td className="px-4 py-3">
                 <a href={s.sourceUrl} target="_blank" rel="noopener" className="text-brand-600 underline hover:text-brand-700">
                   {hostname(s.sourceUrl)}
@@ -115,7 +107,7 @@ export function AdminSources() {
                   {meta.enumLabels.sourceHealth[s.sourceHealth]}
                 </span>
               </td>
-              <td className="px-4 py-3 text-ink-700 tabular-nums">{ageDays(s.verifiedOn)}</td>
+              <td className="px-4 py-3 text-ink-700 tabular-nums">{s.ageDays}</td>
             </tr>
           ))}
         </TableShell>

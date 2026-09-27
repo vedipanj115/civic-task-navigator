@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
 import { formatDays, formatFee, inr } from '../format'
 import { HOVER_LIFT } from '../styles/hover'
-import type { CitiesMetaResponse, Roadmap, RoadmapStep, StepDetailResponse, StepStatus } from '../types'
+import type { MetaCitiesResponse, Roadmap, RoadmapStep, StepDetailResponse, StepStatus } from '../types'
 
-type Labels = CitiesMetaResponse['enumLabels']
+type Labels = MetaCitiesResponse['enumLabels']
 
 const BADGE: Record<StepStatus, string> = {
   AVAILABLE: 'bg-info-050 text-info-700 ring-info-700/25',
