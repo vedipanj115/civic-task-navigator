@@ -3,11 +3,13 @@ import roadmapFixture from './mock/roadmap.json'
 import { applyProgress } from './mock/server'
 import stepsFixture from './mock/steps.json'
 import type {
+  AdminSource,
   CitiesMetaResponse,
   City,
   Roadmap,
   RoadmapRequest,
   ResolveResponse,
+  SourceHealth,
   StepDetailResponse,
 } from './types'
 
@@ -45,4 +47,21 @@ export async function fetchStep(stepId: string): Promise<StepDetailResponse> {
   const rs = baseRoadmap.steps.find((s) => s.step.stepId === stepId)
   if (!rs) throw new Error('STEP_NOT_FOUND')
   return { step: rs.step, ...stepExtras[stepId], sourceHealth: rs.sourceHealth }
+}
+
+// GET /v1/admin/sources — stale first, then ageing, then fresh; oldest verification first within each.
+const HEALTH_ORDER: Record<SourceHealth, number> = { STALE: 0, AGEING: 1, FRESH: 2 }
+
+export async function fetchAdminSources(): Promise<AdminSource[]> {
+  return baseRoadmap.steps
+    .map(({ step, sourceHealth }) => ({
+      stepId: step.stepId,
+      title: step.title,
+      department: step.department,
+      issuingOffice: step.issuingOffice,
+      sourceUrl: step.sourceUrl,
+      verifiedOn: step.verifiedOn,
+      sourceHealth,
+    }))
+    .sort((a, b) => HEALTH_ORDER[a.sourceHealth] - HEALTH_ORDER[b.sourceHealth] || a.verifiedOn.localeCompare(b.verifiedOn))
 }

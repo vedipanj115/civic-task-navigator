@@ -136,3 +136,8 @@ export interface StepDetailResponse {
   prerequisites: Array<{ dependsOnStepId: string; type: PrerequisiteType; reason: string; sourceUrl: string }>
   sourceHealth: SourceHealth
 }
+
+// §8 GET /v1/admin/sources (mock returns the items array only; meta is derived in the UI)
+export type AdminSource = Pick<Step, 'stepId' | 'title' | 'department' | 'issuingOffice' | 'sourceUrl' | 'verifiedOn'> & {
+  sourceHealth: SourceHealth
+}
