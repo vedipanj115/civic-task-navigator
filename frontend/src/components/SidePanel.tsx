@@ -11,9 +11,9 @@ const BADGE: Record<StepStatus, string> = {
   NOT_APPLICABLE: 'bg-slate-100 text-slate-500 ring-slate-200',
 }
 
-type SummaryProps = { roadmap: Roadmap; days: number; cost: number }
+type SummaryProps = { roadmap: Roadmap; days: number; cost: number; onReset: () => void }
 
-function Summary({ roadmap, days, cost }: SummaryProps) {
+function Summary({ roadmap, days, cost, onReset }: SummaryProps) {
   const doneCount = roadmap.steps.filter((rs) => rs.status === 'COMPLETED').length
   const total = roadmap.steps.length
   return (
@@ -39,6 +39,15 @@ function Summary({ roadmap, days, cost }: SummaryProps) {
       <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-slate-100">
         <div className="h-full bg-emerald-500" style={{ width: `${(doneCount / total) * 100}%` }} />
       </div>
+      {doneCount > 0 && (
+        <button
+          type="button"
+          onClick={() => window.confirm('Reset progress? All steps will be marked not done.') && onReset()}
+          className="mt-3 text-xs text-slate-500 underline hover:text-slate-700"
+        >
+          Reset progress
+        </button>
+      )}
     </section>
   )
 }
@@ -168,12 +177,13 @@ type Props = {
   selectedDetail: StepDetailResponse | undefined
   labels: Labels
   onToggleDone: (id: string) => void
+  onReset: () => void
 }
 
-export function SidePanel({ roadmap, remaining, selected, selectedDetail, labels, onToggleDone }: Props) {
+export function SidePanel({ roadmap, remaining, selected, selectedDetail, labels, onToggleDone, onReset }: Props) {
   return (
     <aside className="space-y-4 border-slate-200 bg-slate-50 p-4 md:w-96 md:overflow-y-auto md:border-l">
-      <Summary roadmap={roadmap} days={remaining.days} cost={remaining.cost} />
+      <Summary roadmap={roadmap} days={remaining.days} cost={remaining.cost} onReset={onReset} />
 
       {selected ? (
         <StepCard

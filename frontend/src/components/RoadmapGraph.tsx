@@ -32,8 +32,10 @@ const CARD: Record<StepStatus, string> = {
 
 type StepNodeData = { rs: RoadmapStep; statusLabel: string; isSelected: boolean }
 
-function StepNode({ data: { rs, statusLabel, isSelected } }: NodeProps<StepNodeData>) {
+// Card content shared by the graph node (one line each, truncated) and the mobile list (wraps, shows reasons).
+function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLabel: string; full?: boolean }) {
   const blocked = rs.status === 'BLOCKED'
+  const clip = full ? '' : 'truncate'
   const waiting = `Waiting on ${rs.blockedBy.map((b) => b.shortTitle).join(', ')}`
   const statusLine =
     rs.status === 'COMPLETED' ? (
@@ -41,9 +43,34 @@ function StepNode({ data: { rs, statusLabel, isSelected } }: NodeProps<StepNodeD
     ) : rs.status === 'AVAILABLE' ? (
       <span className="font-medium text-indigo-600">{statusLabel}</span>
     ) : (
-      <span>{blocked ? waiting : statusLabel}</span>
+      <span>{blocked && !full ? waiting : statusLabel}</span>
     )
 
+  return (
+    <>
+      <div className={`${clip} text-sm font-semibold ${blocked ? '' : 'text-slate-900'}`} title={rs.step.title}>
+        {full ? rs.step.title : rs.step.shortTitle}
+      </div>
+      <div className={`mt-0.5 ${clip} ${blocked ? '' : 'text-slate-500'}`}>
+        {formatFee(rs.step)} · {formatDays(rs.step)}
+      </div>
+      <div className={`mt-1.5 ${clip}`} title={blocked && !full ? waiting : undefined}>
+        {statusLine}
+      </div>
+      {blocked && full && (
+        <ul className="mt-1 space-y-0.5">
+          {rs.blockedBy.map((b) => (
+            <li key={b.stepId}>
+              Waiting on <span className="font-medium text-slate-600">{b.shortTitle}</span>: {b.reason}
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
+  )
+}
+
+function StepNode({ data: { rs, statusLabel, isSelected } }: NodeProps<StepNodeData>) {
   return (
     <div
       className={`h-[84px] w-64 cursor-pointer rounded-lg border px-3 py-2 text-xs shadow-sm ${CARD[rs.status]} ${
@@ -51,23 +78,17 @@ function StepNode({ data: { rs, statusLabel, isSelected } }: NodeProps<StepNodeD
       }`}
     >
       <Handle type="target" position={Position.Left} className="opacity-0!" />
-      <div className={`truncate text-sm font-semibold ${blocked ? '' : 'text-slate-900'}`} title={rs.step.title}>
-        {rs.step.shortTitle}
-      </div>
-      <div className={`mt-0.5 truncate ${blocked ? '' : 'text-slate-500'}`}>
-        {formatFee(rs.step)} · {formatDays(rs.step)}
-      </div>
-      <div className="mt-1.5 truncate" title={blocked ? waiting : undefined}>
-        {statusLine}
-      </div>
+      <StepBody rs={rs} statusLabel={statusLabel} />
       <Handle type="source" position={Position.Right} className="opacity-0!" />
     </div>
   )
 }
 
-function StageHeader({ data }: NodeProps<{ stage: number; done: number; total: number }>) {
+type StageData = { stage: number; done: number; total: number }
+
+function StageHeader({ data, className = 'w-64' }: Pick<NodeProps<StageData>, 'data'> & { className?: string }) {
   return (
-    <div className="flex w-64 items-baseline justify-between border-b-2 border-slate-300 pb-2">
+    <div className={`flex ${className} items-baseline justify-between border-b-2 border-slate-300 pb-2`}>
       <span className="text-sm font-semibold tracking-wide text-slate-700 uppercase">Stage {data.stage}</span>
       <span className="text-xs text-slate-500">
         {data.done}/{data.total} done
@@ -208,6 +229,46 @@ function buildEdges(links: Link[], status: (id: string) => StepStatus | undefine
   return edges
 }
 
+const stageCounts = (stepIds: string[], byId: Map<string, RoadmapStep>) => ({
+  done: stepIds.filter((id) => byId.get(id)?.status === 'COMPLETED').length,
+  total: stepIds.length,
+})
+
+type ListProps = Pick<Props, 'roadmap' | 'statusLabels' | 'selectedId' | 'onSelect'>
+
+// Accessible stage-ordered alternative to the graph (docs/06-UI-SPEC.md §6), primary view below 640px.
+export function StepList({ roadmap, statusLabels, selectedId, onSelect }: ListProps) {
+  const byId = new Map(roadmap.steps.map((rs) => [rs.step.stepId, rs]))
+  return (
+    <ol className="space-y-6 p-4">
+      {roadmap.stages.map(({ stage, stepIds }) => (
+        <li key={stage}>
+          <StageHeader data={{ stage, ...stageCounts(stepIds, byId) }} className="w-full" />
+          <ul className="mt-3 space-y-3">
+            {stepIds.map((id) => {
+              const rs = byId.get(id)!
+              return (
+                <li key={id}>
+                  <button
+                    type="button"
+                    aria-pressed={id === selectedId}
+                    onClick={() => onSelect(id === selectedId ? null : id)}
+                    className={`block w-full rounded-lg border px-3 py-2 text-left text-xs shadow-sm ${CARD[rs.status]} ${
+                      id === selectedId ? 'ring-2 ring-indigo-500 ring-offset-2' : ''
+                    }`}
+                  >
+                    <StepBody rs={rs} statusLabel={statusLabels[rs.status]} full />
+                  </button>
+                </li>
+              )
+            })}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  )
+}
+
 type Props = {
   roadmap: Roadmap
   // Full prerequisite list per step (from GET /v1/steps/{id}); blockedBy alone drops edges once steps are done.
@@ -227,11 +288,7 @@ export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId,
       id: `stage-${stage}`,
       type: 'stage',
       position: { x: col * COL_WIDTH, y: 0 },
-      data: {
-        stage,
-        done: stepIds.filter((id) => byId.get(id)?.status === 'COMPLETED').length,
-        total: stepIds.length,
-      },
+      data: { stage, ...stageCounts(stepIds, byId) },
       selectable: false,
     },
     ...stepIds.map((id, row) => {
@@ -277,6 +334,7 @@ export function RoadmapGraph({ roadmap, prerequisites, statusLabels, selectedId,
       onPaneClick={() => onSelect(null)}
       fitView
       fitViewOptions={{ padding: 0.15 }}
+      minZoom={0.1} // default 0.5 can't fit a multi-stage graph on a phone-width pane
       // RF's overflow:hidden container can still be scrolled by focus/scrollIntoView, which shifts the
       // background and controls up and leaves a blank strip; clip makes it unscrollable.
       className="overflow-clip!"

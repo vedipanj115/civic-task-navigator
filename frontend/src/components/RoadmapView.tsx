@@ -4,7 +4,7 @@ import { fetchMeta, fetchRoadmap, fetchStep } from '../api'
 import { remaining } from '../progress'
 import type { Journey } from '../types'
 import { ErrorState } from './ErrorState'
-import { RoadmapGraph } from './RoadmapGraph'
+import { RoadmapGraph, StepList } from './RoadmapGraph'
 import { SidePanel } from './SidePanel'
 
 // Loading state per docs/06-UI-SPEC.md: 3 stage columns of ghost cards plus the rail, same layout as loaded.
@@ -57,6 +57,7 @@ export function RoadmapView({ journey, onChange }: Props) {
     })),
   })
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [showGraph, setShowGraph] = useState(false) // <640px only: graph collapsed behind "View graph"
 
   const roadmap = roadmapQuery.data
   const meta = metaQuery.data
@@ -88,8 +89,26 @@ export function RoadmapView({ journey, onChange }: Props) {
 
   return (
     <div className="flex flex-1 flex-col md:min-h-0 md:flex-row motion-safe:animate-fade-up">
-      <div className="h-[60vh] md:h-auto md:flex-1">
+      <div className="sm:hidden">
+        <StepList
+          roadmap={roadmap}
+          statusLabels={meta.enumLabels.stepStatus}
+          selectedId={selectedId}
+          onSelect={setSelectedId}
+        />
+        <button
+          type="button"
+          aria-expanded={showGraph}
+          aria-controls="roadmap-graph"
+          onClick={() => setShowGraph((v) => !v)}
+          className="mx-4 mb-4 w-[calc(100%-2rem)] rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+        >
+          {showGraph ? 'Hide graph' : 'View graph'}
+        </button>
+      </div>
+      <div id="roadmap-graph" className={`${showGraph ? '' : 'hidden'} h-[60vh] sm:block md:h-auto md:flex-1`}>
         <RoadmapGraph
+          key={String(showGraph)} // remount on toggle so fitView measures the now-visible pane
           roadmap={roadmap}
           prerequisites={prerequisites}
           statusLabels={meta.enumLabels.stepStatus}
@@ -104,6 +123,7 @@ export function RoadmapView({ journey, onChange }: Props) {
         selectedDetail={selectedId ? details.get(selectedId) : undefined}
         labels={meta.enumLabels}
         onToggleDone={toggleDone}
+        onReset={() => onChange({ ...journey, completedStepIds: [] })}
       />
     </div>
   )
