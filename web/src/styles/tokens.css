@@ -1,0 +1,38 @@
+/* docs/07-DESIGN-SYSTEM.md §1 (FROZEN). Type, radius and shadow tokens (§2) live in index.css's @theme static
+   block, not here: declaring them in :root too makes the alias self-referential and breaks the utilities. */
+:root {
+  color-scheme: light;
+
+  /* brand — structure, navigation, links */
+  --brand-900: #0b2545;
+  --brand-700: #13315c;   /* top bar */
+  --brand-600: #1d4ed8;   /* primary buttons, links */
+  --brand-500: #3b82f6;   /* hover, focus ring */
+  --brand-100: #dbeafe;   /* selected rows, info panels */
+  --brand-050: #eff6ff;
+
+  /* accent — the single call to action per screen */
+  --accent-500: #f59e0b;
+  --accent-600: #d97706;
+  --accent-050: #fffbeb;
+
+  /* ink */
+  --ink-900: #111827;     /* body text */
+  --ink-700: #374151;     /* secondary */
+  --ink-600: #4b5563;     /* muted but readable */
+  --ink-500: #6b7280;     /* placeholders, disabled labels */
+  --ink-300: #d1d5db;     /* borders */
+  --ink-200: #e5e7eb;     /* dividers */
+  --ink-100: #f3f4f6;     /* page background */
+  --ink-050: #f9fafb;
+  --white:   #ffffff;
+
+  /* status */
+  --ok-700:     #15803d;  --ok-050:     #f0fdf4;   /* completed, fresh source */
+  --warn-700:   #b45309;  --warn-050:   #fffbeb;   /* blocked, ageing source */
+  --danger-700: #b91c1c;  --danger-050: #fef2f2;   /* errors, stale source */
+  --info-700:   #1d4ed8;  --info-050:   #eff6ff;   /* available, informational */
+  --neutral-700:#374151;                            /* not applicable */
+
+  --focus: #3b82f6;
+}

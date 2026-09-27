@@ -1,0 +1,201 @@
+{
+  "journeyId": "jny_mock_food_outlet",
+  "procedure": {
+    "procedureId": "proc_food_outlet_mumbai",
+    "name": "Open a small food outlet",
+    "city": "MUMBAI",
+    "summary": "Everything a proprietor needs to legally start a small food business in Mumbai."
+  },
+  "stages": [
+    { "stage": 1, "stepIds": ["step_pan", "step_rent_agreement"] },
+    { "stage": 2, "stepIds": ["step_gumasta", "step_udyam"] },
+    { "stage": 3, "stepIds": ["step_fssai", "step_bank_account"] }
+  ],
+  "steps": [
+    {
+      "step": {
+        "stepId": "step_pan",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "PAN card",
+        "shortTitle": "PAN",
+        "description": "Your Permanent Account Number is the tax ID almost every other registration asks for. Apply online and an e-PAN is emailed to you.",
+        "issuingOffice": "Protean (NSDL) — online",
+        "department": "Income Tax Department",
+        "feeInr": 107,
+        "processingDays": { "min": 1, "max": 15 },
+        "modeOnline": true,
+        "applicationUrl": "https://www.onlineservices.nsdl.com/paam/endUserRegisterContact.html",
+        "sourceUrl": "https://www.incometax.gov.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": ["doc_pan_card"],
+        "requiresDocumentIds": ["doc_aadhaar", "doc_photo"]
+      },
+      "status": "AVAILABLE",
+      "stage": 1,
+      "blockedBy": [],
+      "unlocks": ["step_udyam"],
+      "missingDocumentIds": [],
+      "sourceHealth": "FRESH"
+    },
+    {
+      "step": {
+        "stepId": "step_rent_agreement",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "Rent agreement + NOC",
+        "shortTitle": "Rent agreement",
+        "description": "Register the rent agreement for your premises and get a no-objection letter from the owner. Together they prove you can run a business there.",
+        "issuingOffice": "Sub-Registrar / IGR Maharashtra e-registration",
+        "department": "Department of Registration and Stamps, Maharashtra",
+        "feeInr": 2000,
+        "feeNote": "Approximate — stamp duty plus registration fee",
+        "processingDays": { "min": 1, "max": 3 },
+        "modeOnline": true,
+        "applicationUrl": "https://igrmaharashtra.gov.in",
+        "sourceUrl": "https://igrmaharashtra.gov.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": ["doc_rent_agreement", "doc_owner_noc"],
+        "requiresDocumentIds": ["doc_property_papers", "doc_aadhaar", "doc_draft_agreement"]
+      },
+      "status": "AVAILABLE",
+      "stage": 1,
+      "blockedBy": [],
+      "unlocks": [],
+      "missingDocumentIds": [],
+      "sourceHealth": "FRESH"
+    },
+    {
+      "step": {
+        "stepId": "step_gumasta",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "Shop & Establishment registration (Gumasta)",
+        "shortTitle": "Gumasta",
+        "description": "Register your shop with the municipal corporation. Small outlets with fewer than 10 workers only need to file an intimation.",
+        "issuingOffice": "MCGM Shop & Establishment Dept",
+        "department": "Municipal Corporation of Greater Mumbai",
+        "feeInr": 0,
+        "feeNote": "Free for under 10 workers",
+        "processingDays": { "min": 1, "max": 7 },
+        "modeOnline": true,
+        "applicationUrl": "https://portal.mcgm.gov.in",
+        "sourceUrl": "https://portal.mcgm.gov.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": ["doc_gumasta_certificate"],
+        "requiresDocumentIds": ["doc_pan_card", "doc_rent_agreement", "doc_owner_noc", "doc_shop_photo"]
+      },
+      "status": "BLOCKED",
+      "stage": 2,
+      "blockedBy": [
+        { "stepId": "step_pan", "shortTitle": "PAN", "reason": "The Gumasta application requires the applicant's PAN." },
+        { "stepId": "step_rent_agreement", "shortTitle": "Rent agreement", "reason": "The Gumasta application needs the rent agreement and owner's NOC as proof of premises." }
+      ],
+      "unlocks": ["step_fssai"],
+      "missingDocumentIds": ["doc_pan_card", "doc_rent_agreement", "doc_owner_noc"],
+      "sourceHealth": "FRESH"
+    },
+    {
+      "step": {
+        "stepId": "step_udyam",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "Udyam (MSME) registration",
+        "shortTitle": "Udyam",
+        "description": "Register as a micro enterprise to get a Udyam certificate. It is free and usually done online the same day.",
+        "issuingOffice": "Udyam Registration portal",
+        "department": "Ministry of MSME",
+        "feeInr": 0,
+        "processingDays": { "min": 0, "max": 1 },
+        "modeOnline": true,
+        "applicationUrl": "https://udyamregistration.gov.in",
+        "sourceUrl": "https://udyamregistration.gov.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": ["doc_udyam_certificate"],
+        "requiresDocumentIds": ["doc_aadhaar", "doc_pan_card"]
+      },
+      "status": "BLOCKED",
+      "stage": 2,
+      "blockedBy": [
+        { "stepId": "step_pan", "shortTitle": "PAN", "reason": "The Udyam form needs the owner's PAN." }
+      ],
+      "unlocks": [],
+      "missingDocumentIds": ["doc_pan_card"],
+      "sourceHealth": "FRESH"
+    },
+    {
+      "step": {
+        "stepId": "step_fssai",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "FSSAI registration",
+        "shortTitle": "FSSAI",
+        "description": "Register your food business with the food safety regulator. Basic registration covers small outlets and is renewed yearly.",
+        "issuingOffice": "FoSCoS portal",
+        "department": "Food Safety and Standards Authority of India",
+        "feeInr": 100,
+        "feeNote": "Per year",
+        "processingDays": { "min": 7, "max": 14 },
+        "modeOnline": true,
+        "applicationUrl": "https://foscos.fssai.gov.in",
+        "sourceUrl": "https://foscos.fssai.gov.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": ["doc_fssai_registration"],
+        "requiresDocumentIds": ["doc_gumasta_certificate", "doc_aadhaar", "doc_food_items_list"]
+      },
+      "status": "BLOCKED",
+      "stage": 3,
+      "blockedBy": [
+        { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "FSSAI application requires the Gumasta certificate." }
+      ],
+      "unlocks": [],
+      "missingDocumentIds": ["doc_gumasta_certificate"],
+      "sourceHealth": "FRESH"
+    },
+    {
+      "step": {
+        "stepId": "step_bank_account",
+        "procedureId": "proc_food_outlet_mumbai",
+        "title": "Current bank account",
+        "shortTitle": "Current account",
+        "description": "Open a current account in the business's name so payments are kept separate from your personal account.",
+        "issuingOffice": "Any bank branch",
+        "department": "Scheduled commercial bank",
+        "feeInr": 0,
+        "processingDays": { "min": 2, "max": 3 },
+        "modeOnline": false,
+        "sourceUrl": "https://www.rbi.org.in",
+        "verifiedOn": "2026-09-20",
+        "producesDocumentIds": [],
+        "requiresDocumentIds": ["doc_pan_card", "doc_gumasta_certificate", "doc_udyam_certificate"]
+      },
+      "status": "BLOCKED",
+      "stage": 3,
+      "blockedBy": [
+        { "stepId": "step_gumasta", "shortTitle": "Gumasta", "reason": "Banks ask for the Gumasta certificate as proof of business." },
+        { "stepId": "step_udyam", "shortTitle": "Udyam", "reason": "The Udyam certificate is used for the bank's business KYC." },
+        { "stepId": "step_pan", "shortTitle": "PAN", "reason": "A current account needs the owner's PAN for KYC." }
+      ],
+      "unlocks": [],
+      "missingDocumentIds": ["doc_pan_card", "doc_gumasta_certificate", "doc_udyam_certificate"],
+      "sourceHealth": "FRESH"
+    }
+  ],
+  "excluded": [
+    {
+      "stepId": "step_gst",
+      "title": "GST registration",
+      "reason": "Your turnover is below ₹20 lakh, so GST registration is not mandatory."
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "title": "Company incorporation",
+      "reason": "You are a sole proprietorship, so you do not need to incorporate a company."
+    }
+  ],
+  "totals": {
+    "applicableStepCount": 6,
+    "excludedStepCount": 2,
+    "totalFeeInr": 2207,
+    "criticalPathDaysMin": 9,
+    "criticalPathDaysMax": 36,
+    "sequentialDaysMax": 43,
+    "distinctDepartments": 6,
+    "distinctSourceUrls": 6
+  }
+}
