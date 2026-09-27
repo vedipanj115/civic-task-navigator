@@ -5,6 +5,7 @@ import { remaining } from '../progress'
 import type { Journey } from '../types'
 import { ErrorState } from './ErrorState'
 import { RoadmapGraph, StepList } from './RoadmapGraph'
+import { RoadmapHeader } from './RoadmapHeader'
 import { SidePanel } from './SidePanel'
 
 // Loading state per docs/06-UI-SPEC.md: 3 stage columns of ghost cards plus the rail, same layout as loaded.
@@ -87,44 +88,61 @@ export function RoadmapView({ journey, onChange }: Props) {
         : [...completedStepIds, id],
     })
 
+  const stepList = (
+    <StepList
+      roadmap={roadmap}
+      statusLabels={meta.enumLabels.stepStatus}
+      selectedId={selectedId}
+      onSelect={setSelectedId}
+    />
+  )
+
   return (
-    <div className="flex flex-1 flex-col md:min-h-0 md:flex-row motion-safe:animate-fade-up">
-      <div className="sm:hidden">
-        <StepList
+    <div className="flex flex-1 flex-col md:min-h-0 motion-safe:animate-fade-up">
+      <RoadmapHeader roadmap={roadmap} city={meta.cities[0]?.label} />
+      <div className="flex flex-1 flex-col md:min-h-0 md:flex-row">
+        <div className="sm:hidden">
+          {stepList}
+          <button
+            type="button"
+            aria-expanded={showGraph}
+            aria-controls="roadmap-graph"
+            onClick={() => setShowGraph((v) => !v)}
+            className="mx-4 mb-4 w-[calc(100%-2rem)] rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          >
+            {showGraph ? 'Hide graph' : 'View graph'}
+          </button>
+        </div>
+        {/* Graph plus the always-on "All steps" list (07-DESIGN-SYSTEM §7). The graph stops 3.5rem short so the
+            list heading peeks out: the wheel zooms the graph, so the list needs a visible hint to scroll to. */}
+        <div className="md:min-w-0 md:flex-1 md:overflow-y-auto">
+          <div id="roadmap-graph" className={`${showGraph ? '' : 'hidden'} h-[60vh] sm:block md:h-[calc(100%-3.5rem)]`}>
+            <RoadmapGraph
+              key={String(showGraph)} // remount on toggle so fitView measures the now-visible pane
+              roadmap={roadmap}
+              prerequisites={prerequisites}
+              statusLabels={meta.enumLabels.stepStatus}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          </div>
+          <section aria-labelledby="all-steps" className="hidden border-t border-slate-200 sm:block">
+            <h2 id="all-steps" className="px-4 pt-4 text-sm font-semibold text-slate-700">
+              All steps
+            </h2>
+            {stepList}
+          </section>
+        </div>
+        <SidePanel
           roadmap={roadmap}
-          statusLabels={meta.enumLabels.stepStatus}
-          selectedId={selectedId}
-          onSelect={setSelectedId}
-        />
-        <button
-          type="button"
-          aria-expanded={showGraph}
-          aria-controls="roadmap-graph"
-          onClick={() => setShowGraph((v) => !v)}
-          className="mx-4 mb-4 w-[calc(100%-2rem)] rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
-        >
-          {showGraph ? 'Hide graph' : 'View graph'}
-        </button>
-      </div>
-      <div id="roadmap-graph" className={`${showGraph ? '' : 'hidden'} h-[60vh] sm:block md:h-auto md:flex-1`}>
-        <RoadmapGraph
-          key={String(showGraph)} // remount on toggle so fitView measures the now-visible pane
-          roadmap={roadmap}
-          prerequisites={prerequisites}
-          statusLabels={meta.enumLabels.stepStatus}
-          selectedId={selectedId}
-          onSelect={setSelectedId}
+          remaining={remaining(roadmap)}
+          selected={selected}
+          selectedDetail={selectedId ? details.get(selectedId) : undefined}
+          labels={meta.enumLabels}
+          onToggleDone={toggleDone}
+          onReset={() => onChange({ ...journey, completedStepIds: [] })}
         />
       </div>
-      <SidePanel
-        roadmap={roadmap}
-        remaining={remaining(roadmap)}
-        selected={selected}
-        selectedDetail={selectedId ? details.get(selectedId) : undefined}
-        labels={meta.enumLabels}
-        onToggleDone={toggleDone}
-        onReset={() => onChange({ ...journey, completedStepIds: [] })}
-      />
     </div>
   )
 }
