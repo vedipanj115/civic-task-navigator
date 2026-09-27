@@ -13,6 +13,7 @@ import ReactFlow, {
   type NodeProps,
 } from 'reactflow'
 import { formatDays, formatFee } from '../format'
+import { HOVER_LIFT } from '../styles/hover'
 import type { Roadmap, RoadmapStep, StepStatus } from '../types'
 
 const NODE_W = 256 // Tailwind w-64
@@ -76,7 +77,7 @@ function StepBody({ rs, statusLabel, full = false }: { rs: RoadmapStep; statusLa
 function StepNode({ data: { rs, statusLabel, isSelected, isUnlocked } }: NodeProps<StepNodeData>) {
   return (
     <div
-      className={`h-[84px] w-64 cursor-pointer rounded-lg border px-3 py-2 text-xs shadow-card ${CARD[rs.status]} ${
+      className={`h-[84px] w-64 cursor-pointer rounded-lg border px-3 py-2 text-xs shadow-card ${HOVER_LIFT} ${CARD[rs.status]} ${
         isSelected ? 'ring-2 ring-brand-500 ring-offset-2' : ''
       } ${isUnlocked ? UNLOCK : ''}`}
     >

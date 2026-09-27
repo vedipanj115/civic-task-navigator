@@ -6,6 +6,7 @@ import { LandingPage } from './components/LandingPage'
 import { RoadmapView } from './components/RoadmapView'
 import { TaskEntry } from './components/TaskEntry'
 import { loadJourney, saveJourney } from './journey'
+import { HOVER, HOVER_LIFT } from './styles/hover'
 import type { Journey, JourneyAnswers } from './types'
 
 function App() {
@@ -48,13 +49,13 @@ function App() {
           <p className="text-sm text-ink-600">Municipal bureaucracy path visualizer</p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setShowAdmin((v) => !v)} className="text-sm text-ink-700 underline hover:text-ink-900">
+          <button onClick={() => setShowAdmin((v) => !v)} className={`text-sm text-ink-700 underline hover:text-ink-900 ${HOVER}`}>
             {showAdmin ? 'Back' : 'Admin'}
           </button>
           {journey && !showAdmin && (
             <button
               onClick={() => setJourney(null)}
-              className="rounded-md border border-ink-300 px-3 py-1.5 text-sm hover:bg-ink-100"
+              className={`rounded-md border border-ink-300 px-3 py-1.5 text-sm hover:bg-ink-100 ${HOVER_LIFT}`}
             >
               New task
             </button>

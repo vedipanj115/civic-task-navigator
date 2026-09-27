@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { formatDays, formatFee, inr } from '../format'
+import { HOVER_LIFT } from '../styles/hover'
 import type { CitiesMetaResponse, Roadmap, RoadmapStep, StepDetailResponse, StepStatus } from '../types'
 
 type Labels = CitiesMetaResponse['enumLabels']
@@ -137,7 +138,9 @@ function StepCard({ rs, detail, roadmap, labels, onToggleDone }: StepCardProps) 
           )}
         </div>
 
-        <label className="flex cursor-pointer items-center gap-3 rounded-lg border border-ink-200 px-3 py-2.5 font-medium has-checked:border-ok-700 has-checked:bg-ok-050 has-checked:text-ok-700">
+        <label
+          className={`flex cursor-pointer items-center gap-3 rounded-lg border border-ink-200 px-3 py-2.5 font-medium has-checked:border-ok-700 has-checked:bg-ok-050 has-checked:text-ok-700 ${HOVER_LIFT}`}
+        >
           <input
             type="checkbox"
             checked={rs.status === 'COMPLETED'}
@@ -160,7 +163,7 @@ function StepCard({ rs, detail, roadmap, labels, onToggleDone }: StepCardProps) 
             href={step.applicationUrl}
             target="_blank"
             rel="noreferrer"
-            className="shrink-0 rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-700"
+            className={`shrink-0 rounded-md bg-brand-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-brand-700 ${HOVER_LIFT}`}
           >
             Apply ↗
           </a>

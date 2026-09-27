@@ -1,3 +1,5 @@
+import { HOVER_LIFT } from '../styles/hover'
+
 // docs/07-DESIGN-SYSTEM.md: ErrorState shows the message and, when known, the ApiErrorCode.
 type Props = { message: string; code?: string; onRetry: () => void }
 
@@ -9,7 +11,7 @@ export function ErrorState({ message, code, onRetry }: Props) {
       {code && <p className="mt-2 font-mono text-xs text-ink-500">{code}</p>}
       <button
         onClick={onRetry}
-        className="mt-4 rounded-md border border-ink-300 px-3 py-1.5 text-sm font-medium hover:bg-ink-100"
+        className={`mt-4 rounded-md border border-ink-300 px-3 py-1.5 text-sm font-medium hover:bg-ink-100 ${HOVER_LIFT}`}
       >
         Try again
       </button>

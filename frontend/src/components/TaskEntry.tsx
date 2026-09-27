@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { useState, type FormEvent } from 'react'
 import { fetchMeta, resolveTask } from '../api'
+import { HOVER_LIFT } from '../styles/hover'
 import type { Activity, City, EntityType, JourneyAnswers, PremisesType, ResolveResponse } from '../types'
 
 const INPUT = 'w-full rounded-md border border-ink-300 bg-white px-3 py-2'
@@ -34,7 +35,7 @@ function ProcedureButtons({ candidates, onPick }: ProcedureButtonsProps) {
           key={c.procedureId}
           type="button"
           onClick={() => onPick(c.procedureId)}
-          className="rounded-md border border-ink-300 px-3 py-2 text-left text-sm font-medium hover:border-brand-500 hover:bg-brand-050"
+          className={`rounded-md border border-ink-300 px-3 py-2 text-left text-sm font-medium hover:border-brand-500 hover:bg-brand-050 ${HOVER_LIFT}`}
         >
           {c.name}
         </button>
@@ -171,7 +172,7 @@ export function TaskEntry({ onSubmit }: Props) {
       <button
         type="submit"
         disabled={pending}
-        className="w-full rounded-md bg-accent-500 px-4 py-2 font-semibold text-ink-900 hover:bg-accent-600 disabled:opacity-60"
+        className={`w-full rounded-md bg-accent-500 px-4 py-2 font-semibold text-ink-900 hover:bg-accent-600 disabled:opacity-60 ${HOVER_LIFT}`}
       >
         {pending ? 'Finding your procedure…' : 'Show my roadmap'}
       </button>

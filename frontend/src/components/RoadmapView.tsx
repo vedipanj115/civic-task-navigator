@@ -2,6 +2,7 @@ import { keepPreviousData, useQueries, useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import { fetchMeta, fetchRoadmap, fetchStep } from '../api'
 import { remaining } from '../progress'
+import { HOVER_LIFT } from '../styles/hover'
 import type { Journey, StepStatus } from '../types'
 import { ErrorState } from './ErrorState'
 import { RoadmapGraph, StepList } from './RoadmapGraph'
@@ -127,7 +128,7 @@ export function RoadmapView({ journey, onChange }: Props) {
             aria-expanded={showGraph}
             aria-controls="roadmap-graph"
             onClick={() => setShowGraph((v) => !v)}
-            className="mx-4 mb-4 w-[calc(100%-2rem)] rounded-md border border-ink-300 bg-white px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-050"
+            className={`mx-4 mb-4 w-[calc(100%-2rem)] rounded-md border border-ink-300 bg-white px-4 py-2 text-sm font-medium text-ink-700 hover:bg-ink-050 ${HOVER_LIFT}`}
           >
             {showGraph ? 'Hide graph' : 'View graph'}
           </button>

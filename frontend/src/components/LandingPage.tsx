@@ -1,3 +1,5 @@
+import { HOVER_LIFT } from '../styles/hover'
+
 const STEPS = [
   { title: 'Tell us your task', body: 'Describe what you need done, pick your city and answer a few quick questions.' },
   { title: 'Get a personalized roadmap', body: 'See every office, fee and document, in the order you have to do them.' },
@@ -48,7 +50,7 @@ export function LandingPage({ onGetStarted }: { onGetStarted: () => void }) {
         <button
           onClick={onGetStarted}
           style={{ animationDelay: '500ms' }}
-          className={`mt-10 w-full rounded-md bg-accent-500 px-6 py-2.5 font-semibold text-ink-900 hover:bg-accent-600 sm:w-auto ${FADE_UP}`}
+          className={`mt-10 w-full rounded-md bg-accent-500 px-6 py-2.5 font-semibold text-ink-900 hover:bg-accent-600 sm:w-auto ${FADE_UP} ${HOVER_LIFT}`}
         >
           Get started
         </button>
