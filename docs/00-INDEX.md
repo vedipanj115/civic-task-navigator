@@ -42,11 +42,11 @@ These were chosen so work could start. Correct them and re-read the affected doc
 
 | # | Assumption | Affects |
 |---|---|---|
-| A1 | Event is roughly 36 working hours across 2 days | `08`, `09`, `10` |
+| A1 | **Confirmed:** Sat 26 Sep 3 pm to Mon 28 Sep. Reporting 9:30 am, judging 10 am by department faculty. Frontend done Sun 4 pm, everything done Sun 8 pm, test and fix until midnight. Round 1 results Mon 3 pm, round 2 Tue | `08`, `09`, `10` |
 | A2 | City scope is **Mumbai, Maharashtra** only | `01`, `02`, data |
 | A3 | Procedure bundle is **opening a small food outlet** (6 steps) | `01`, `03`, data |
 | A4 | No department constraint on stack; we use TypeScript everywhere | `05` |
-| A5 | No cloud requirement; local dev is enough, deployment is a bonus | `05`, `09` |
+| A5 | Judged live on our laptop; a local run plus a recorded backup is enough, deployment is a bonus | `05`, `09`, `10` |
 | A6 | No login; a journey lives in browser storage | `01`, `02`, `06` |
 
 ## Ground rules
