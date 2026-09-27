@@ -1,0 +1,12 @@
+{
+  "documents": [
+    { "documentId": "doc_pan", "name": "PAN card", "source": "ISSUED_BY_STEP", "issuedByStepId": "step_pan" },
+    {
+      "documentId": "doc_gumasta_certificate",
+      "name": "Shop & Establishment certificate",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_gumasta"
+    },
+    { "documentId": "doc_rent_agreement", "name": "Rent agreement", "source": "CITIZEN_HELD" }
+  ]
+}
