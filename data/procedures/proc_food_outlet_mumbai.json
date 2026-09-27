@@ -91,7 +91,7 @@
       },
       "modeOnline": true,
       "applicationUrl": "https://aaplesarkar.mahaonline.gov.in/en",
-      "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en",
+      "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en/CommonForm/CitizenServices",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [
         "doc_gumasta_certificate"
@@ -145,7 +145,7 @@
       },
       "modeOnline": true,
       "applicationUrl": "https://foscos.fssai.gov.in/",
-      "sourceUrl": "https://foscos.fssai.gov.in/",
+      "sourceUrl": "https://fssai.gov.in/cms/food-safety-and-standards-rules--2011.php",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [
         "doc_fssai_license"
@@ -254,7 +254,7 @@
       "dependsOnStepId": "step_pan",
       "type": "DOCUMENT",
       "reason": "Udyam registration requires the applicant's PAN number.",
-      "sourceUrl": "https://udyamregistration.gov.in/"
+      "sourceUrl": "https://udyamregistration.gov.in/Important.aspx"
     },
     {
       "stepId": "step_fssai",
