@@ -66,14 +66,14 @@
       },
       "modeOnline": true,
       "applicationUrl": "https://igrmaharashtra.gov.in/",
-      "sourceUrl": "https://igrmaharashtra.gov.in/",
+      "sourceUrl": "https://leaveandlicense.igrmaharashtra.gov.in/Fees/calculator_sd",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [
         "doc_rent_agreement",
         "doc_premises_noc"
       ],
       "requiresDocumentIds": [],
-      "notes": "UNVERIFIED — homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
+      "notes": "sourceUrl is the official IGR Maharashtra Leave & License 2.0 stamp duty calculator (checked 2026-09-27). Fee still UNVERIFIED — see feeNote."
     },
     {
       "stepId": "step_gumasta",
@@ -171,7 +171,7 @@
       },
       "modeOnline": false,
       "applicationUrl": null,
-      "sourceUrl": "https://rbi.org.in/",
+      "sourceUrl": "https://rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=13141",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [],
       "requiresDocumentIds": [
@@ -179,7 +179,7 @@
         "doc_udyam_certificate",
         "doc_gumasta_certificate"
       ],
-      "notes": "UNVERIFIED — sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
+      "notes": "sourceUrl is RBI's Commercial Banks – Know Your Customer Directions, 2025, which replaced the repealed 2016 KYC Master Direction (checked 2026-09-27). Requiring both Udyam and Gumasta is a simplification still to be confirmed against the Directions' list of acceptable business-proof documents for proprietorships."
     },
     {
       "stepId": "step_gst",
@@ -197,7 +197,7 @@
       },
       "modeOnline": true,
       "applicationUrl": "https://www.gst.gov.in/",
-      "sourceUrl": "https://cbic-gst.gov.in/",
+      "sourceUrl": "https://cbic-gst.gov.in/gst-registration-rules.html",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [
         "doc_gst_certificate"
@@ -223,7 +223,7 @@
       },
       "modeOnline": true,
       "applicationUrl": "https://www.mca.gov.in/",
-      "sourceUrl": "https://www.mca.gov.in/",
+      "sourceUrl": "https://www.mca.gov.in/content/mca/global/en/help-faq/faqs/company-services/incorporation/spiceplus-linked-filings.html",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [
         "doc_incorporation_certificate"
@@ -231,7 +231,7 @@
       "requiresDocumentIds": [
         "doc_pan_card"
       ],
-      "notes": "UNVERIFIED — homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
+      "notes": "sourceUrl is MCA's SPICe+ & linked filings help page (checked 2026-09-27). Fee still UNVERIFIED — see feeNote. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
     }
   ],
   "prerequisites": [
@@ -268,21 +268,21 @@
       "dependsOnStepId": "step_pan",
       "type": "DOCUMENT",
       "reason": "Opening a business current account requires the proprietor's/entity's PAN.",
-      "sourceUrl": "https://rbi.org.in/"
+      "sourceUrl": "https://rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=13141"
     },
     {
       "stepId": "step_bank_account",
       "dependsOnStepId": "step_udyam",
       "type": "DOCUMENT",
       "reason": "Banks require the Udyam registration certificate as business proof for a current account.",
-      "sourceUrl": "https://rbi.org.in/"
+      "sourceUrl": "https://rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=13141"
     },
     {
       "stepId": "step_bank_account",
       "dependsOnStepId": "step_gumasta",
       "type": "DOCUMENT",
       "reason": "Banks require the Gumasta certificate as proof of a legally registered business for a current account.",
-      "sourceUrl": "https://rbi.org.in/"
+      "sourceUrl": "https://rbi.org.in/scripts/BS_ViewMasDirections.aspx?id=13141"
     },
     {
       "stepId": "step_gst",
@@ -296,7 +296,7 @@
       "dependsOnStepId": "step_pan",
       "type": "DOCUMENT",
       "reason": "SPICe+ incorporation filing requires PAN details for the applicant/directors.",
-      "sourceUrl": "https://www.mca.gov.in/"
+      "sourceUrl": "https://www.mca.gov.in/Ministry/pdf/SPICe+_help.pdf"
     }
   ],
   "applicabilityRules": [
