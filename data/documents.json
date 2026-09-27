@@ -1,0 +1,52 @@
+{
+  "documents": [
+    {
+      "documentId": "doc_pan_card",
+      "name": "PAN Card",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_pan"
+    },
+    {
+      "documentId": "doc_rent_agreement",
+      "name": "Registered Rent Agreement",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_rent_agreement"
+    },
+    {
+      "documentId": "doc_premises_noc",
+      "name": "No-Objection Certificate from property owner",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_rent_agreement"
+    },
+    {
+      "documentId": "doc_gumasta_certificate",
+      "name": "Shop & Establishment (Gumasta) Certificate",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_gumasta"
+    },
+    {
+      "documentId": "doc_udyam_certificate",
+      "name": "Udyam Registration Certificate",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_udyam"
+    },
+    {
+      "documentId": "doc_fssai_license",
+      "name": "FSSAI Registration/License",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_fssai"
+    },
+    {
+      "documentId": "doc_gst_certificate",
+      "name": "GST Registration Certificate",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_gst"
+    },
+    {
+      "documentId": "doc_incorporation_certificate",
+      "name": "Certificate of Incorporation",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_company_incorporation"
+    }
+  ]
+}
