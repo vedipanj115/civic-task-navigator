@@ -1,0 +1,57 @@
+{
+  "procedure": {
+    "procedureId": "proc_test_fixture",
+    "name": "Test fixture procedure",
+    "synonyms": ["test fixture procedure"],
+    "city": "MUMBAI",
+    "appliesTo": {
+      "entityTypes": ["PROPRIETORSHIP"],
+      "activities": ["SERVICES"]
+    },
+    "summary": "A minimal, fictional procedure used only by M2's own tests — not real government data, not the M3 production dataset."
+  },
+  "steps": [
+    {
+      "stepId": "step_test_a",
+      "procedureId": "proc_test_fixture",
+      "title": "Test step A (no prerequisites)",
+      "shortTitle": "Step A",
+      "description": "Fixture step with no prerequisites; issues a fixture document.",
+      "issuingOffice": "Test Office",
+      "department": "Test Department",
+      "feeInr": 0,
+      "processingDays": { "min": 1, "max": 2 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/step-a",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": ["doc_test_cert"],
+      "requiresDocumentIds": []
+    },
+    {
+      "stepId": "step_test_b",
+      "procedureId": "proc_test_fixture",
+      "title": "Test step B (depends on step A)",
+      "shortTitle": "Step B",
+      "description": "Fixture step that requires the document step A produces.",
+      "issuingOffice": "Test Office",
+      "department": "Test Department",
+      "feeInr": 100,
+      "processingDays": { "min": 2, "max": 5 },
+      "modeOnline": false,
+      "sourceUrl": "https://example.test/step-b",
+      "verifiedOn": "2026-01-02",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": ["doc_test_cert"]
+    }
+  ],
+  "prerequisites": [
+    {
+      "stepId": "step_test_b",
+      "dependsOnStepId": "step_test_a",
+      "type": "DOCUMENT",
+      "reason": "Test step B requires the certificate issued by test step A.",
+      "sourceUrl": "https://example.test/step-b"
+    }
+  ],
+  "applicabilityRules": []
+}

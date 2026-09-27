@@ -1,0 +1,304 @@
+{
+  "procedure": {
+    "procedureId": "proc_food_outlet_mumbai",
+    "name": "Open a small food outlet",
+    "synonyms": [
+      "restaurant",
+      "cafe",
+      "eatery",
+      "food stall",
+      "open a restaurant",
+      "start a food business",
+      "register my shop"
+    ],
+    "city": "MUMBAI",
+    "appliesTo": {
+      "entityTypes": [
+        "PROPRIETORSHIP",
+        "PARTNERSHIP",
+        "PRIVATE_LIMITED",
+        "LLP"
+      ],
+      "activities": [
+        "FOOD_SERVICE"
+      ]
+    },
+    "summary": "Everything needed to legally open and operate a small food outlet (restaurant, cafe, or food stall) in Mumbai."
+  },
+  "steps": [
+    {
+      "stepId": "step_pan",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "PAN Card Application",
+      "shortTitle": "PAN",
+      "description": "Apply for a Permanent Account Number, required as identity/tax proof for nearly every later step.",
+      "issuingOffice": "Protean eGov Technologies (authorized by Income Tax Dept.)",
+      "department": "Income Tax Department",
+      "feeInr": 101,
+      "feeNote": "\u20b991 + GST for Indian communication address; \u20b9862 + GST if the communication address is outside India. Confirmed on the official Income Tax Dept. page.",
+      "processingDays": {
+        "min": 7,
+        "max": 15
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://onlineservices.proteantech.in/paam/endUserRegisterContact.html",
+      "sourceUrl": "https://incometaxindia.gov.in/tax-services/apply-for-pan",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_pan_card"
+      ],
+      "requiresDocumentIds": [],
+      "notes": "min processing day estimate is not stated on the official page and needs confirmation; max (15) matches the fast-track figure quoted across sources."
+    },
+    {
+      "stepId": "step_rent_agreement",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "Rent Agreement + NOC from property owner",
+      "shortTitle": "Rent + NOC",
+      "description": "Execute a registered rent agreement for the business premises and obtain a No-Objection Certificate from the property owner for commercial use.",
+      "issuingOffice": "Inspector General of Registration, Maharashtra",
+      "department": "IGR Maharashtra",
+      "feeInr": 0,
+      "feeNote": "UNVERIFIED \u2014 stamp duty and registration fees depend on rent amount/lease term and must be confirmed on the IGR Maharashtra e-registration portal, not left at 0 in the final version.",
+      "processingDays": {
+        "min": 1,
+        "max": 3
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://igrmaharashtra.gov.in/",
+      "sourceUrl": "https://igrmaharashtra.gov.in/",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_rent_agreement",
+        "doc_premises_noc"
+      ],
+      "requiresDocumentIds": [],
+      "notes": "UNVERIFIED \u2014 homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
+    },
+    {
+      "stepId": "step_gumasta",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "Shop & Establishment registration (Gumasta)",
+      "shortTitle": "Gumasta",
+      "description": "Register the business premises under the Maharashtra Shops and Establishments Act via the Aaple Sarkar portal.",
+      "issuingOffice": "Maharashtra Labour Department",
+      "department": "Maharashtra Labour Department",
+      "feeInr": 0,
+      "feeNote": "UNVERIFIED \u2014 third-party sources quote inconsistent figures (varies by employee count/registration type); must be confirmed live on Aaple Sarkar before this ships.",
+      "processingDays": {
+        "min": 3,
+        "max": 7
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://aaplesarkar.mahaonline.gov.in/en",
+      "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_gumasta_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card",
+        "doc_rent_agreement",
+        "doc_premises_noc"
+      ],
+      "notes": "UNVERIFIED fee/processing figures \u2014 see PR notes. Structure and portal are confirmed."
+    },
+    {
+      "stepId": "step_udyam",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "Udyam (MSME) Registration",
+      "shortTitle": "Udyam",
+      "description": "Register the business as a micro/small/medium enterprise on the Udyam portal using PAN and Aadhaar.",
+      "issuingOffice": "Ministry of MSME",
+      "department": "Ministry of MSME",
+      "feeInr": 0,
+      "feeNote": "Confirmed free of cost directly on the official portal (udyamregistration.gov.in/Important.aspx): \"Registration Process is totally free. No Costs or Fees are to be paid to anyone.\"",
+      "processingDays": {
+        "min": 1,
+        "max": 1
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://udyamregistration.gov.in/",
+      "sourceUrl": "https://udyamregistration.gov.in/Important.aspx",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_udyam_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "VERIFIED \u2014 fee confirmed on official portal page."
+    },
+    {
+      "stepId": "step_fssai",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "FSSAI Food Business Registration/License",
+      "shortTitle": "FSSAI",
+      "description": "Register or license the food business with FSSAI via FoSCoS; the tier (registration vs. license) depends on turnover and scale.",
+      "issuingOffice": "Food Safety and Standards Authority of India",
+      "department": "FSSAI",
+      "feeInr": 0,
+      "feeNote": "UNVERIFIED \u2014 fee tiers depend on turnover/license type and must be pulled directly from the FoSCoS fee schedule page.",
+      "processingDays": {
+        "min": 7,
+        "max": 14
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://foscos.fssai.gov.in/",
+      "sourceUrl": "https://foscos.fssai.gov.in/",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_fssai_license"
+      ],
+      "requiresDocumentIds": [
+        "doc_gumasta_certificate"
+      ],
+      "notes": "UNVERIFIED fee/exact tier \u2014 structure and dependency on Gumasta certificate still need a cited source page explaining why FSSAI requires proof of a registered premises."
+    },
+    {
+      "stepId": "step_bank_account",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "Open a Business Current Bank Account",
+      "shortTitle": "Bank Account",
+      "description": "Open a current account in the business's name, using PAN, Udyam certificate, and Gumasta certificate as KYC/business proof.",
+      "issuingOffice": "Any scheduled commercial bank",
+      "department": "Banking (RBI KYC norms)",
+      "feeInr": 0,
+      "feeNote": "Varies by bank; typically free to open, some require a minimum balance.",
+      "processingDays": {
+        "min": 1,
+        "max": 3
+      },
+      "modeOnline": false,
+      "applicationUrl": null,
+      "sourceUrl": "https://rbi.org.in/",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": [
+        "doc_pan_card",
+        "doc_udyam_certificate",
+        "doc_gumasta_certificate"
+      ],
+      "notes": "UNVERIFIED \u2014 sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
+    },
+    {
+      "stepId": "step_gst",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "GST Registration",
+      "shortTitle": "GST",
+      "description": "Register for Goods and Services Tax. Only required once annual turnover crosses the threshold for the applicant's entity type/state.",
+      "issuingOffice": "GST Network (GSTN)",
+      "department": "Central Board of Indirect Taxes and Customs",
+      "feeInr": 0,
+      "feeNote": "Government charges no fee for GST registration (confirmed via CBIC official FAQ/user manual).",
+      "processingDays": {
+        "min": 3,
+        "max": 7
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://www.gst.gov.in/",
+      "sourceUrl": "https://cbic-gst.gov.in/",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_gst_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "VERIFIED fee (free) via CBIC. Turnover threshold (Rs 20 lakh / Rs 10 lakh NE states) cross-checked against an official CBIC PDF flier. Excluded from this demo journey by an applicabilityRule (turnover below Rs 20 lakh threshold)."
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "procedureId": "proc_food_outlet_mumbai",
+      "title": "Company Incorporation",
+      "shortTitle": "Incorporation",
+      "description": "Incorporate as a Private Limited Company via the MCA's SPICe+ form. Only applicable if the applicant chooses to register as a company rather than a proprietorship/partnership/LLP.",
+      "issuingOffice": "Ministry of Corporate Affairs",
+      "department": "Ministry of Corporate Affairs",
+      "feeInr": 0,
+      "feeNote": "UNVERIFIED \u2014 MCA fee schedule (SPICe+) depends on authorized capital and must be pulled directly from the MCA portal.",
+      "processingDays": {
+        "min": 7,
+        "max": 15
+      },
+      "modeOnline": true,
+      "applicationUrl": "https://www.mca.gov.in/",
+      "sourceUrl": "https://www.mca.gov.in/",
+      "verifiedOn": "2026-09-27",
+      "producesDocumentIds": [
+        "doc_incorporation_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "UNVERIFIED \u2014 homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
+    }
+  ],
+  "prerequisites": [
+    {
+      "stepId": "step_gumasta",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "Gumasta registration requires a copy of the applicant's PAN card as identity proof.",
+      "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en"
+    },
+    {
+      "stepId": "step_gumasta",
+      "dependsOnStepId": "step_rent_agreement",
+      "type": "DOCUMENT",
+      "reason": "Gumasta registration requires proof of premises (rent agreement and owner's NOC).",
+      "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en"
+    },
+    {
+      "stepId": "step_udyam",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "Udyam registration requires the applicant's PAN number.",
+      "sourceUrl": "https://udyamregistration.gov.in/"
+    },
+    {
+      "stepId": "step_fssai",
+      "dependsOnStepId": "step_gumasta",
+      "type": "DOCUMENT",
+      "reason": "FSSAI registration requires the Gumasta certificate as proof of a legally registered business premises.",
+      "sourceUrl": "https://foscos.fssai.gov.in/"
+    },
+    {
+      "stepId": "step_bank_account",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "Opening a business current account requires the proprietor's/entity's PAN.",
+      "sourceUrl": "https://rbi.org.in/"
+    },
+    {
+      "stepId": "step_bank_account",
+      "dependsOnStepId": "step_udyam",
+      "type": "DOCUMENT",
+      "reason": "Banks require the Udyam registration certificate as business proof for a current account.",
+      "sourceUrl": "https://rbi.org.in/"
+    },
+    {
+      "stepId": "step_bank_account",
+      "dependsOnStepId": "step_gumasta",
+      "type": "DOCUMENT",
+      "reason": "Banks require the Gumasta certificate as proof of a legally registered business for a current account.",
+      "sourceUrl": "https://rbi.org.in/"
+    }
+  ],
+  "applicabilityRules": [
+    {
+      "stepId": "step_gst",
+      "field": "annualTurnoverInr",
+      "operator": "GTE",
+      "value": 2000000,
+      "exclusionReason": "GST registration is not required because annual turnover is below the \u20b920 lakh threshold."
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "field": "entityType",
+      "operator": "EQ",
+      "value": "PRIVATE_LIMITED",
+      "exclusionReason": "Company incorporation is not required because the business is not being registered as a private limited company."
+    }
+  ]
+}

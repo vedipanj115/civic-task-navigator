@@ -1,0 +1,10 @@
+{
+  "documents": [
+    {
+      "documentId": "doc_test_cert",
+      "name": "Test fixture certificate",
+      "source": "ISSUED_BY_STEP",
+      "issuedByStepId": "step_test_a"
+    }
+  ]
+}
