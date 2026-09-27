@@ -1,0 +1,210 @@
+{
+  "procedure": {
+    "procedureId": "proc_food_outlet_demo",
+    "name": "Open a small food outlet",
+    "synonyms": ["restaurant", "cafe", "eatery", "food stall"],
+    "city": "MUMBAI",
+    "appliesTo": {
+      "entityTypes": ["PROPRIETORSHIP", "PARTNERSHIP", "PRIVATE_LIMITED", "LLP"],
+      "activities": ["FOOD_SERVICE"]
+    },
+    "summary": "M2 test-fixture version of docs/03 § 8's worked demo journey — not real government data."
+  },
+  "steps": [
+    {
+      "stepId": "step_pan",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "PAN card",
+      "shortTitle": "PAN",
+      "description": "Permanent Account Number, needed before most other registrations.",
+      "issuingOffice": "Income Tax Department",
+      "department": "Income Tax Department",
+      "feeInr": 0,
+      "processingDays": { "min": 7, "max": 15 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/pan",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": ["doc_pan"],
+      "requiresDocumentIds": []
+    },
+    {
+      "stepId": "step_rent",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "Rent agreement and landlord NOC",
+      "shortTitle": "Rent + NOC",
+      "description": "Registered rent agreement plus a no-objection certificate from the landlord.",
+      "issuingOffice": "Sub-Registrar's office",
+      "department": "Registration and Stamps Department",
+      "feeInr": 0,
+      "processingDays": { "min": 1, "max": 3 },
+      "modeOnline": false,
+      "sourceUrl": "https://example.test/rent-noc",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": ["doc_rent_agreement"]
+    },
+    {
+      "stepId": "step_gumasta",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "Shop & Establishment registration (Gumasta)",
+      "shortTitle": "Gumasta",
+      "description": "Registers the premises as a place of business.",
+      "issuingOffice": "MCGM Shop & Establishment Dept",
+      "department": "Municipal Corporation of Greater Mumbai",
+      "feeInr": 500,
+      "processingDays": { "min": 3, "max": 7 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/gumasta",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": ["doc_gumasta_certificate"],
+      "requiresDocumentIds": ["doc_pan"]
+    },
+    {
+      "stepId": "step_udyam",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "Udyam (MSME) registration",
+      "shortTitle": "Udyam",
+      "description": "Registers the business as a micro/small/medium enterprise.",
+      "issuingOffice": "Ministry of MSME",
+      "department": "Ministry of MSME",
+      "feeInr": 0,
+      "processingDays": { "min": 1, "max": 1 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/udyam",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": ["doc_pan"]
+    },
+    {
+      "stepId": "step_fssai",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "FSSAI registration",
+      "shortTitle": "FSSAI",
+      "description": "Food safety registration required to serve food to the public.",
+      "issuingOffice": "FSSAI regional office",
+      "department": "Food Safety and Standards Authority of India",
+      "feeInr": 2000,
+      "processingDays": { "min": 7, "max": 14 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/fssai",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": ["doc_gumasta_certificate"]
+    },
+    {
+      "stepId": "step_bank",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "Open a current bank account",
+      "shortTitle": "Bank account",
+      "description": "Business current account for receiving payments.",
+      "issuingOffice": "Partner bank branch",
+      "department": "Partner bank branch",
+      "feeInr": 0,
+      "processingDays": { "min": 1, "max": 3 },
+      "modeOnline": false,
+      "sourceUrl": "https://example.test/bank",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": ["doc_gumasta_certificate", "doc_pan"]
+    },
+    {
+      "stepId": "step_gst",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "GST registration",
+      "shortTitle": "GST",
+      "description": "Goods and Services Tax registration.",
+      "issuingOffice": "GST Department",
+      "department": "GST Department",
+      "feeInr": 0,
+      "processingDays": { "min": 3, "max": 10 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/gst",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": []
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "procedureId": "proc_food_outlet_demo",
+      "title": "Company incorporation",
+      "shortTitle": "Incorporation",
+      "description": "Incorporating a private limited company or LLP.",
+      "issuingOffice": "Ministry of Corporate Affairs",
+      "department": "Ministry of Corporate Affairs",
+      "feeInr": 5000,
+      "processingDays": { "min": 5, "max": 20 },
+      "modeOnline": true,
+      "sourceUrl": "https://example.test/incorporation",
+      "verifiedOn": "2026-01-01",
+      "producesDocumentIds": [],
+      "requiresDocumentIds": []
+    }
+  ],
+  "prerequisites": [
+    {
+      "stepId": "step_gumasta",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "The Gumasta application requires the applicant's PAN.",
+      "sourceUrl": "https://example.test/gumasta"
+    },
+    {
+      "stepId": "step_gumasta",
+      "dependsOnStepId": "step_rent",
+      "type": "SEQUENCE",
+      "reason": "The Gumasta application requires a registered rent agreement and landlord NOC.",
+      "sourceUrl": "https://example.test/gumasta"
+    },
+    {
+      "stepId": "step_udyam",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "Udyam registration requires the applicant's PAN.",
+      "sourceUrl": "https://example.test/udyam"
+    },
+    {
+      "stepId": "step_fssai",
+      "dependsOnStepId": "step_gumasta",
+      "type": "DOCUMENT",
+      "reason": "FSSAI registration requires the Gumasta certificate.",
+      "sourceUrl": "https://example.test/fssai"
+    },
+    {
+      "stepId": "step_bank",
+      "dependsOnStepId": "step_gumasta",
+      "type": "DOCUMENT",
+      "reason": "Opening a current account requires the Gumasta certificate.",
+      "sourceUrl": "https://example.test/bank"
+    },
+    {
+      "stepId": "step_bank",
+      "dependsOnStepId": "step_udyam",
+      "type": "SEQUENCE",
+      "reason": "The bank asks for the Udyam registration alongside the Gumasta certificate.",
+      "sourceUrl": "https://example.test/bank"
+    },
+    {
+      "stepId": "step_bank",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "Opening a current account requires the applicant's PAN.",
+      "sourceUrl": "https://example.test/bank"
+    }
+  ],
+  "applicabilityRules": [
+    {
+      "stepId": "step_gst",
+      "field": "annualTurnoverInr",
+      "operator": "GTE",
+      "value": 2000000,
+      "exclusionReason": "Your turnover is below \u20b920 lakh, so GST registration is not required."
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "field": "entityType",
+      "operator": "IN",
+      "value": ["PRIVATE_LIMITED", "LLP"],
+      "exclusionReason": "Company incorporation only applies to private limited companies and LLPs."
+    }
+  ]
+}

@@ -5,10 +5,10 @@
   "description": "Express API and dependency engine (docs/03, docs/04, docs/05). Owned by M2.",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch src/server.ts",
+    "dev": "tsx watch --env-file=.env src/server.ts",
     "start": "tsx src/server.ts",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test src/__tests__/**/*.test.ts"
+    "test": "tsx --test"
   },
   "dependencies": {
     "@cn/shared": "*",
