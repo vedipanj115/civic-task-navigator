@@ -44,10 +44,10 @@ function RoadmapSkeleton() {
 type Props = { journey: Journey; onChange: (journey: Journey) => void }
 
 export function RoadmapView({ journey, onChange }: Props) {
-  const { procedureId, answers, completedStepIds } = journey
+  const { journeyId, procedureId, answers, completedStepIds } = journey
   const roadmapQuery = useQuery({
-    queryKey: ['roadmap', procedureId, answers, completedStepIds],
-    queryFn: () => fetchRoadmap({ procedureId, answers, completedStepIds }),
+    queryKey: ['roadmap', journeyId, procedureId, answers, completedStepIds],
+    queryFn: () => fetchRoadmap({ journeyId, procedureId, answers, completedStepIds }),
     placeholderData: keepPreviousData, // keep the graph on screen while a toggle re-fetches
   })
   const metaQuery = useQuery({ queryKey: ['meta'], queryFn: fetchMeta, staleTime: Infinity })
