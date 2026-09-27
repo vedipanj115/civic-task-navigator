@@ -29,9 +29,11 @@ Where scope and spec disagree: a **scope change** goes through Vivaan; a **contr
 
 ## 3. Phase plan
 
-Phases, not clock times, so this survives whatever duration the event turns out to be. Do not start a phase before the previous one's checkpoint passes.
+Clock times are now fixed (see `00` A1): CP1 Sun 10:00, CP2 Sun 13:00, frontend complete Sun 16:00, CP3 Sun 20:00, CP4 feature freeze and testing Sun 20:00 to 24:00, reporting Mon 09:30. If a checkpoint is missed, cut scope using the P1 list in `01-PRD.md` section 4; do not move the time.
 
-### Phase 1 — Foundation (target: first quarter of available time)
+Do not start a phase before the previous one's checkpoint passes.
+
+### Phase 1 — Foundation (CP1: Sun 10:00)
 
 | Slot | Tasks |
 |---|---|
@@ -42,7 +44,7 @@ Phases, not clock times, so this survives whatever duration the event turns out 
 
 **CP1 — done when:** `npm run dev:api` serves `/v1/health`, `npm run dev:web` renders the shell, `/dev` shows all components, and `data/procedures/proc_food_outlet_mumbai.json` loads without validation errors.
 
-### Phase 2 — Engine and graph
+### Phase 2 — Engine and graph (CP2: Sun 13:00)
 
 | Slot | Tasks |
 |---|---|
@@ -53,7 +55,7 @@ Phases, not clock times, so this survives whatever duration the event turns out 
 
 **CP2 — done when:** typing the demo sentence produces the correct 3-stage graph from the real API, and the engine matches the oracle exactly.
 
-### Phase 3 — Detail and progress
+### Phase 3 — Detail and progress (frontend Sun 16:00, CP3: Sun 20:00)
 
 | Slot | Tasks |
 |---|---|
@@ -64,7 +66,7 @@ Phases, not clock times, so this survives whatever duration the event turns out 
 
 **CP3 — done when:** the full demo path runs start to finish without a console error, and completing the Gumasta unblocks exactly two steps.
 
-### Phase 4 — Polish and submission
+### Phase 4 — Polish and submission (Sun 20:00 to midnight)
 
 Everyone: freeze features. M1 polishes and checks mobile. M2 fixes only bugs. M3 re-verifies dates. M4 records the demo, finishes the README and architecture diagram, and tags the submission.
 

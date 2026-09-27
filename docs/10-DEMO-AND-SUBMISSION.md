@@ -53,3 +53,11 @@ Judges respect a clear boundary far more than a vague claim of national coverage
 5. Check the commit history shows all four members.
 6. Record the demo. Keep the raw file.
 7. Tag the submission: `git tag -a submission -m "Internal Hackathon 2026-27 submission" && git push origin submission`.
+
+## 6. Event day (Mon 28 Sep)
+
+- Sunday before midnight: last merge, tag `submission`, every laptop pulls `main` and runs it once.
+- 9:30 reporting: start the API and web app on the presenting laptop before judging. Browser at 125%, other tabs closed.
+- Keep the recorded demo on the desktop as a fallback.
+- Each member can explain their own part in two minutes.
+- Round 1 results Mon 3 pm; fix what the judges found before round 2 on Tuesday.
