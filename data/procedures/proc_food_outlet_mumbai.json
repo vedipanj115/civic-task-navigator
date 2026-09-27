@@ -35,7 +35,7 @@
       "issuingOffice": "Protean eGov Technologies (authorized by Income Tax Dept.)",
       "department": "Income Tax Department",
       "feeInr": 101,
-      "feeNote": "\u20b991 + GST for Indian communication address; \u20b9862 + GST if the communication address is outside India. Confirmed on the official Income Tax Dept. page.",
+      "feeNote": "₹91 + GST for Indian communication address; ₹862 + GST if the communication address is outside India. Confirmed on the official Income Tax Dept. page.",
       "processingDays": {
         "min": 7,
         "max": 15
@@ -59,7 +59,7 @@
       "issuingOffice": "Inspector General of Registration, Maharashtra",
       "department": "IGR Maharashtra",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED \u2014 stamp duty and registration fees depend on rent amount/lease term and must be confirmed on the IGR Maharashtra e-registration portal, not left at 0 in the final version.",
+      "feeNote": "UNVERIFIED — stamp duty and registration fees depend on rent amount/lease term and must be confirmed on the IGR Maharashtra e-registration portal, not left at 0 in the final version.",
       "processingDays": {
         "min": 1,
         "max": 3
@@ -73,7 +73,7 @@
         "doc_premises_noc"
       ],
       "requiresDocumentIds": [],
-      "notes": "UNVERIFIED \u2014 homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
+      "notes": "UNVERIFIED — homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
     },
     {
       "stepId": "step_gumasta",
@@ -84,7 +84,7 @@
       "issuingOffice": "Maharashtra Labour Department",
       "department": "Maharashtra Labour Department",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED \u2014 third-party sources quote inconsistent figures (varies by employee count/registration type); must be confirmed live on Aaple Sarkar before this ships.",
+      "feeNote": "UNVERIFIED — third-party sources quote inconsistent figures (varies by employee count/registration type); must be confirmed live on Aaple Sarkar before this ships.",
       "processingDays": {
         "min": 3,
         "max": 7
@@ -101,7 +101,7 @@
         "doc_rent_agreement",
         "doc_premises_noc"
       ],
-      "notes": "UNVERIFIED fee/processing figures \u2014 see PR notes. Structure and portal are confirmed."
+      "notes": "UNVERIFIED fee/processing figures — see PR notes. Structure and portal are confirmed."
     },
     {
       "stepId": "step_udyam",
@@ -127,7 +127,7 @@
       "requiresDocumentIds": [
         "doc_pan_card"
       ],
-      "notes": "VERIFIED \u2014 fee confirmed on official portal page."
+      "notes": "VERIFIED — fee confirmed on official portal page."
     },
     {
       "stepId": "step_fssai",
@@ -138,7 +138,7 @@
       "issuingOffice": "Food Safety and Standards Authority of India",
       "department": "FSSAI",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED \u2014 fee tiers depend on turnover/license type and must be pulled directly from the FoSCoS fee schedule page.",
+      "feeNote": "UNVERIFIED — fee tiers depend on turnover/license type and must be pulled directly from the FoSCoS fee schedule page.",
       "processingDays": {
         "min": 7,
         "max": 14
@@ -153,7 +153,7 @@
       "requiresDocumentIds": [
         "doc_gumasta_certificate"
       ],
-      "notes": "UNVERIFIED fee/exact tier \u2014 structure and dependency on Gumasta certificate still need a cited source page explaining why FSSAI requires proof of a registered premises."
+      "notes": "UNVERIFIED fee/exact tier — structure and dependency on Gumasta certificate still need a cited source page explaining why FSSAI requires proof of a registered premises."
     },
     {
       "stepId": "step_bank_account",
@@ -179,7 +179,7 @@
         "doc_udyam_certificate",
         "doc_gumasta_certificate"
       ],
-      "notes": "UNVERIFIED \u2014 sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
+      "notes": "UNVERIFIED — sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
     },
     {
       "stepId": "step_gst",
@@ -216,7 +216,7 @@
       "issuingOffice": "Ministry of Corporate Affairs",
       "department": "Ministry of Corporate Affairs",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED \u2014 MCA fee schedule (SPICe+) depends on authorized capital and must be pulled directly from the MCA portal.",
+      "feeNote": "UNVERIFIED — MCA fee schedule (SPICe+) depends on authorized capital and must be pulled directly from the MCA portal.",
       "processingDays": {
         "min": 7,
         "max": 15
@@ -231,7 +231,7 @@
       "requiresDocumentIds": [
         "doc_pan_card"
       ],
-      "notes": "UNVERIFIED \u2014 homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
+      "notes": "UNVERIFIED — homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
     }
   ],
   "prerequisites": [
@@ -283,6 +283,20 @@
       "type": "DOCUMENT",
       "reason": "Banks require the Gumasta certificate as proof of a legally registered business for a current account.",
       "sourceUrl": "https://rbi.org.in/"
+    },
+    {
+      "stepId": "step_gst",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "GST registration requires the applicant's PAN.",
+      "sourceUrl": "https://cbic-gst.gov.in/gst-registration-rules.html"
+    },
+    {
+      "stepId": "step_company_incorporation",
+      "dependsOnStepId": "step_pan",
+      "type": "DOCUMENT",
+      "reason": "SPICe+ incorporation filing requires PAN details for the applicant/directors.",
+      "sourceUrl": "https://www.mca.gov.in/"
     }
   ],
   "applicabilityRules": [
@@ -291,7 +305,7 @@
       "field": "annualTurnoverInr",
       "operator": "GTE",
       "value": 2000000,
-      "exclusionReason": "GST registration is not required because annual turnover is below the \u20b920 lakh threshold."
+      "exclusionReason": "GST registration is not required because annual turnover is below the ₹20 lakh threshold."
     },
     {
       "stepId": "step_company_incorporation",
