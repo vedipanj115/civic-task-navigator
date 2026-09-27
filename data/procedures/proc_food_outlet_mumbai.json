@@ -2,11 +2,26 @@
   "procedure": {
     "procedureId": "proc_food_outlet_mumbai",
     "name": "Open a small food outlet",
-    "synonyms": ["restaurant", "cafe", "eatery", "food stall", "open a restaurant", "start a food business", "register my shop"],
+    "synonyms": [
+      "restaurant",
+      "cafe",
+      "eatery",
+      "food stall",
+      "open a restaurant",
+      "start a food business",
+      "register my shop"
+    ],
     "city": "MUMBAI",
     "appliesTo": {
-      "entityTypes": ["PROPRIETORSHIP", "PARTNERSHIP", "PRIVATE_LIMITED", "LLP"],
-      "activities": ["FOOD_SERVICE"]
+      "entityTypes": [
+        "PROPRIETORSHIP",
+        "PARTNERSHIP",
+        "PRIVATE_LIMITED",
+        "LLP"
+      ],
+      "activities": [
+        "FOOD_SERVICE"
+      ]
     },
     "summary": "Everything needed to legally open and operate a small food outlet (restaurant, cafe, or food stall) in Mumbai."
   },
@@ -20,13 +35,18 @@
       "issuingOffice": "Protean eGov Technologies (authorized by Income Tax Dept.)",
       "department": "Income Tax Department",
       "feeInr": 101,
-      "feeNote": "₹91 + GST for Indian communication address; ₹862 + GST if the communication address is outside India. Confirmed on the official Income Tax Dept. page.",
-      "processingDays": { "min": 7, "max": 15 },
+      "feeNote": "\u20b991 + GST for Indian communication address; \u20b9862 + GST if the communication address is outside India. Confirmed on the official Income Tax Dept. page.",
+      "processingDays": {
+        "min": 7,
+        "max": 15
+      },
       "modeOnline": true,
       "applicationUrl": "https://onlineservices.proteantech.in/paam/endUserRegisterContact.html",
       "sourceUrl": "https://incometaxindia.gov.in/tax-services/apply-for-pan",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_pan_card"],
+      "producesDocumentIds": [
+        "doc_pan_card"
+      ],
       "requiresDocumentIds": [],
       "notes": "min processing day estimate is not stated on the official page and needs confirmation; max (15) matches the fast-track figure quoted across sources."
     },
@@ -39,15 +59,21 @@
       "issuingOffice": "Inspector General of Registration, Maharashtra",
       "department": "IGR Maharashtra",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED — stamp duty and registration fees depend on rent amount/lease term and must be confirmed on the IGR Maharashtra e-registration portal, not left at 0 in the final version.",
-      "processingDays": { "min": 1, "max": 3 },
+      "feeNote": "UNVERIFIED \u2014 stamp duty and registration fees depend on rent amount/lease term and must be confirmed on the IGR Maharashtra e-registration portal, not left at 0 in the final version.",
+      "processingDays": {
+        "min": 1,
+        "max": 3
+      },
       "modeOnline": true,
       "applicationUrl": "https://igrmaharashtra.gov.in/",
       "sourceUrl": "https://igrmaharashtra.gov.in/",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_rent_agreement", "doc_premises_noc"],
+      "producesDocumentIds": [
+        "doc_rent_agreement",
+        "doc_premises_noc"
+      ],
       "requiresDocumentIds": [],
-      "notes": "UNVERIFIED — homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
+      "notes": "UNVERIFIED \u2014 homepage only confirmed reachable; the specific e-registration sub-page and fee schedule still need to be located and cited directly."
     },
     {
       "stepId": "step_gumasta",
@@ -58,15 +84,24 @@
       "issuingOffice": "Maharashtra Labour Department",
       "department": "Maharashtra Labour Department",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED — third-party sources quote inconsistent figures (varies by employee count/registration type); must be confirmed live on Aaple Sarkar before this ships.",
-      "processingDays": { "min": 3, "max": 7 },
+      "feeNote": "UNVERIFIED \u2014 third-party sources quote inconsistent figures (varies by employee count/registration type); must be confirmed live on Aaple Sarkar before this ships.",
+      "processingDays": {
+        "min": 3,
+        "max": 7
+      },
       "modeOnline": true,
       "applicationUrl": "https://aaplesarkar.mahaonline.gov.in/en",
       "sourceUrl": "https://aaplesarkar.mahaonline.gov.in/en",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_gumasta_certificate"],
-      "requiresDocumentIds": ["doc_pan_card", "doc_rent_agreement", "doc_premises_noc"],
-      "notes": "UNVERIFIED fee/processing figures — see PR notes. Structure and portal are confirmed."
+      "producesDocumentIds": [
+        "doc_gumasta_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card",
+        "doc_rent_agreement",
+        "doc_premises_noc"
+      ],
+      "notes": "UNVERIFIED fee/processing figures \u2014 see PR notes. Structure and portal are confirmed."
     },
     {
       "stepId": "step_udyam",
@@ -77,15 +112,22 @@
       "issuingOffice": "Ministry of MSME",
       "department": "Ministry of MSME",
       "feeInr": 0,
-      "feeNote": "Udyam registration is free of cost on the official portal.",
-      "processingDays": { "min": 1, "max": 1 },
+      "feeNote": "Confirmed free of cost directly on the official portal (udyamregistration.gov.in/Important.aspx): \"Registration Process is totally free. No Costs or Fees are to be paid to anyone.\"",
+      "processingDays": {
+        "min": 1,
+        "max": 1
+      },
       "modeOnline": true,
       "applicationUrl": "https://udyamregistration.gov.in/",
-      "sourceUrl": "https://udyamregistration.gov.in/",
+      "sourceUrl": "https://udyamregistration.gov.in/Important.aspx",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_udyam_certificate"],
-      "requiresDocumentIds": ["doc_pan_card"],
-      "notes": "UNVERIFIED — fee (free) is widely and consistently stated but should still be confirmed by opening the live portal page directly and citing the specific sub-page."
+      "producesDocumentIds": [
+        "doc_udyam_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "VERIFIED \u2014 fee confirmed on official portal page."
     },
     {
       "stepId": "step_fssai",
@@ -96,15 +138,22 @@
       "issuingOffice": "Food Safety and Standards Authority of India",
       "department": "FSSAI",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED — fee tiers depend on turnover/license type and must be pulled directly from the FoSCoS fee schedule page.",
-      "processingDays": { "min": 7, "max": 14 },
+      "feeNote": "UNVERIFIED \u2014 fee tiers depend on turnover/license type and must be pulled directly from the FoSCoS fee schedule page.",
+      "processingDays": {
+        "min": 7,
+        "max": 14
+      },
       "modeOnline": true,
       "applicationUrl": "https://foscos.fssai.gov.in/",
       "sourceUrl": "https://foscos.fssai.gov.in/",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_fssai_license"],
-      "requiresDocumentIds": ["doc_gumasta_certificate"],
-      "notes": "UNVERIFIED fee/exact tier — structure and dependency on Gumasta certificate still need a cited source page explaining why FSSAI requires proof of a registered premises."
+      "producesDocumentIds": [
+        "doc_fssai_license"
+      ],
+      "requiresDocumentIds": [
+        "doc_gumasta_certificate"
+      ],
+      "notes": "UNVERIFIED fee/exact tier \u2014 structure and dependency on Gumasta certificate still need a cited source page explaining why FSSAI requires proof of a registered premises."
     },
     {
       "stepId": "step_bank_account",
@@ -116,14 +165,21 @@
       "department": "Banking (RBI KYC norms)",
       "feeInr": 0,
       "feeNote": "Varies by bank; typically free to open, some require a minimum balance.",
-      "processingDays": { "min": 1, "max": 3 },
+      "processingDays": {
+        "min": 1,
+        "max": 3
+      },
       "modeOnline": false,
       "applicationUrl": null,
       "sourceUrl": "https://rbi.org.in/",
       "verifiedOn": "2026-09-27",
       "producesDocumentIds": [],
-      "requiresDocumentIds": ["doc_pan_card", "doc_udyam_certificate", "doc_gumasta_certificate"],
-      "notes": "UNVERIFIED — sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
+      "requiresDocumentIds": [
+        "doc_pan_card",
+        "doc_udyam_certificate",
+        "doc_gumasta_certificate"
+      ],
+      "notes": "UNVERIFIED \u2014 sourceUrl is RBI's homepage as a placeholder; must be replaced with the specific KYC circular/master direction page that states current-account documentation requirements for businesses."
     },
     {
       "stepId": "step_gst",
@@ -134,15 +190,22 @@
       "issuingOffice": "GST Network (GSTN)",
       "department": "Central Board of Indirect Taxes and Customs",
       "feeInr": 0,
-      "feeNote": "GST registration itself is free on the official portal.",
-      "processingDays": { "min": 3, "max": 7 },
+      "feeNote": "Government charges no fee for GST registration (confirmed via CBIC official FAQ/user manual).",
+      "processingDays": {
+        "min": 3,
+        "max": 7
+      },
       "modeOnline": true,
       "applicationUrl": "https://www.gst.gov.in/",
-      "sourceUrl": "https://www.gst.gov.in/",
+      "sourceUrl": "https://cbic-gst.gov.in/",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_gst_certificate"],
-      "requiresDocumentIds": ["doc_pan_card"],
-      "notes": "UNVERIFIED — homepage only; needs a cited sub-page for the exact process/fee statement. Excluded from this demo journey by an applicabilityRule (turnover below ₹20 lakh threshold)."
+      "producesDocumentIds": [
+        "doc_gst_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "VERIFIED fee (free) via CBIC. Turnover threshold (Rs 20 lakh / Rs 10 lakh NE states) cross-checked against an official CBIC PDF flier. Excluded from this demo journey by an applicabilityRule (turnover below Rs 20 lakh threshold)."
     },
     {
       "stepId": "step_company_incorporation",
@@ -153,15 +216,22 @@
       "issuingOffice": "Ministry of Corporate Affairs",
       "department": "Ministry of Corporate Affairs",
       "feeInr": 0,
-      "feeNote": "UNVERIFIED — MCA fee schedule (SPICe+) depends on authorized capital and must be pulled directly from the MCA portal.",
-      "processingDays": { "min": 7, "max": 15 },
+      "feeNote": "UNVERIFIED \u2014 MCA fee schedule (SPICe+) depends on authorized capital and must be pulled directly from the MCA portal.",
+      "processingDays": {
+        "min": 7,
+        "max": 15
+      },
       "modeOnline": true,
       "applicationUrl": "https://www.mca.gov.in/",
       "sourceUrl": "https://www.mca.gov.in/",
       "verifiedOn": "2026-09-27",
-      "producesDocumentIds": ["doc_incorporation_certificate"],
-      "requiresDocumentIds": ["doc_pan_card"],
-      "notes": "UNVERIFIED — homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
+      "producesDocumentIds": [
+        "doc_incorporation_certificate"
+      ],
+      "requiresDocumentIds": [
+        "doc_pan_card"
+      ],
+      "notes": "UNVERIFIED \u2014 homepage only; needs the specific SPICe+ page cited. Excluded from this demo journey by an applicabilityRule (entityType is not PRIVATE_LIMITED)."
     }
   ],
   "prerequisites": [
@@ -221,7 +291,7 @@
       "field": "annualTurnoverInr",
       "operator": "GTE",
       "value": 2000000,
-      "exclusionReason": "GST registration is not required because annual turnover is below the ₹20 lakh threshold."
+      "exclusionReason": "GST registration is not required because annual turnover is below the \u20b920 lakh threshold."
     },
     {
       "stepId": "step_company_incorporation",
